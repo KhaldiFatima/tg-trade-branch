@@ -1,0 +1,143 @@
+.auth {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .img {
+    height: 43vh;
+    animation: slide-down 0.5s ease;
+  }
+
+  .form {
+    // width: 70rem;
+    padding: 1.5rem;
+    animation: slide-up 0.5s ease;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    // margin: auto;
+    // text-align: center;
+    .cardForm {
+      width: 80%;
+
+      h2 {
+        color: var(--color-danger);
+        text-align: center;
+      }
+      form {
+        input[type='text'],
+        input[type='email'],
+        input[type='password'],
+        input[type='number'] {
+          display: block;
+          font-size: 1.6rem;
+          font-weight: 300;
+          padding: 1rem;
+          margin: 1rem auto;
+          width: 100%;
+          border: 1px solid #ccc;
+          border-bottom: 3px solid #ccc;
+          border-radius: 3px;
+          outline: none;
+
+          &:focus {
+            outline: none;
+            box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
+            border-bottom: 3px solid #0bf75a;
+          }
+
+          &:focus:invalid {
+            border-bottom: 3px solid red;
+          }
+        }
+        .links {
+          display: flex;
+          justify-content: space-between;
+          margin: 5px 0;
+        }
+
+        p {
+          text-align: center;
+          margin: 1rem;
+        }
+      }
+      .btn {
+        font-size: 23px;
+        color: #999;
+        &:hover {
+          color: orangered;
+        }
+      }
+      .register {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 1rem;
+      }
+    }
+    .cardImg {
+      width: 50%;
+      text-align: center;
+
+      img {
+        width: 100%;
+      }
+    }
+  }
+
+  .group {
+    height: 100%;
+    border: 1px solid var(--light-blue);
+    padding: 7px;
+    box-shadow: none;
+  }
+
+  .indicator {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 10px;
+  }
+
+  @keyframes slide-up {
+    0% {
+      transform: translateY(-5rem);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+  @keyframes slide-down {
+    0% {
+      transform: translateY(5rem);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .auth {
+    .img {
+      display: none;
+    }
+    .form {
+      width: 32rem;
+
+      .cardForm {
+        width: 85%;
+        p {
+          font-size: 1.25rem;
+        }
+      }
+      .cardImg {
+        display: none;
+      }
+    }
+  }
+}

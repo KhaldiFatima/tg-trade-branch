@@ -1,0 +1,81 @@
+.dashboard {
+  height: 80vh;
+}
+.home-dashboard {
+  max-height: 480px;
+  overflow-x: hidden;
+  // background: #b7975b;
+  width: 100%;
+  margin: 20px 20px 20px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ffffff;
+}
+.menu-dashboard {
+  width: 25rem;
+  min-height: 480px;
+  padding: 1rem;
+  background-color: #fff;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  box-shadow: var(--box-shadow);
+  overflow: hidden;
+
+  .list-dashboard {
+    li {
+      padding: 15px;
+      margin-bottom: 2rem;
+      .btn {
+        font-size: 23px;
+        color: #030b6b;
+      }
+      &:hover {
+        background: #ff450033;
+        border-radius: 5px;
+        cursor: pointer;
+
+        & .btn {
+          color: orangered;
+        }
+      }
+    }
+  }
+}
+
+.setting-dashboard {
+  min-height: 440px;
+  padding: 1rem;
+  background-color: #fff;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  box-shadow: var(--box-shadow);
+  overflow: hidden;
+
+  label {
+    width: 100%;
+    font-size: 2rem;
+    color: #333;
+    cursor: pointer;
+  }
+
+  input[type='checkbox'] {
+    cursor: pointer;
+    height: 2rem;
+    margin-left: 90%;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .menu-dashboard {
+    width: 10%;
+    .list-dashboard {
+      li {
+        padding: 5px;
+        margin-bottom: 2rem;
+        P {
+          display: none;
+        }
+      }
+    }
+  }
+}

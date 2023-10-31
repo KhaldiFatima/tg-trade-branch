@@ -1,0 +1,43 @@
+.profile {
+  .card {
+    min-height: 450px;
+    // width: 100%;
+    max-width: 400px;
+    // padding: 1rem;
+    // border: 1px solid #030b6b;
+    width: 100%;
+    min-width: 700px;
+    padding: 1rem;
+    background-color: #fff;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .profile {
+    .card {
+      width: 70%;
+      min-width: 240px;
+    }
+  }
+}
+
+@media screen and (min-width: 500px) and (max-width: 700px) {
+  .profile {
+    .card {
+      width: 100%;
+      min-width: 350px;
+    }
+  }
+}
+@media screen and (min-width: 700px) and (max-width: 1015px) {
+  .profile {
+    .card {
+      width: 100%;
+      min-width: 550px;
+    }
+  }
+}

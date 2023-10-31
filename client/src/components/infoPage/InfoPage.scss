@@ -1,0 +1,23 @@
+.info {
+  height: 40vh;
+  // background-color: red;
+
+  input[type='number'] {
+    display: block;
+    font-size: 1.6rem;
+    font-weight: 300;
+    padding: 0.8rem;
+    margin: 0.8rem auto;
+    width: 100%;
+    border: 1px solid #777;
+    border-radius: 3px;
+    outline: none;
+  }
+  button {
+    margin-bottom: 1.5rem;
+    a {
+      color: #fff;
+      padding: 0.25rem;
+    }
+  }
+}

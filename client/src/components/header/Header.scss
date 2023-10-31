@@ -1,0 +1,45 @@
+.header {
+  background-color: #030b6b;
+  height: 7rem;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 40px;
+
+  & nav {
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+.home-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  & li a {
+    color: #fff;
+  }
+  & > * {
+    margin-left: 1rem;
+    color: #fff;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .header {
+    width: 100%;
+
+    & nav {
+      width: fit-content;
+      max-width: 400px;
+    }
+    .name,
+    & button {
+      display: none;
+    }
+  }
+}

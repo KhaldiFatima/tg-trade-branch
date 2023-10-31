@@ -1,0 +1,25 @@
+.method {
+  width: 50%;
+  padding: 1rem;
+  background-color: #fff;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  box-shadow: var(--box-shadow);
+  overflow: hidden;
+}
+
+input,
+label {
+  cursor: pointer;
+}
+label {
+  width: 40%;
+}
+input[type='radio'] {
+  height: 2.5rem;
+  width: 2.5rem;
+  margin-right: 0.5rem;
+}
+img {
+  width: 60%;
+}
