@@ -6,7 +6,8 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
 const userRouter = require('./routes/user');
-// const settingsRouter = require('./routes/settings');
+const transactionRouter = require('./routes/transaction');
+const amountRouter = require('./routes/amount');
 
 const error = require('./middleware/errorMiddleware');
 
@@ -27,7 +28,8 @@ app.use(
 );
 
 app.use('/api/v1/users', userRouter);
-// app.use('/api/v1/settings', settingsRouter);
+app.use('/api/v1/transactions', transactionRouter);
+app.use('/api/v1/amount', amountRouter);
 
 app.get('/', (req, res) => {
   res.send('Home Page');

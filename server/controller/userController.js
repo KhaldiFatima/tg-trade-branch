@@ -1,8 +1,6 @@
 const asyncHandler = require('express-async-handler');
-// const bcrypt = require('bcryptjs');
 const User = require('../models/user');
 const Token = require('../models/token');
-
 const { generateToken, hashToken } = require('../utils/index');
 var parser = require('ua-parser-js');
 const jwt = require('jsonwebtoken');
@@ -10,6 +8,7 @@ const sendEmail = require('../utils/sendEmail');
 const crypto = require('crypto');
 const Cryptr = require('cryptr');
 const cryptr = new Cryptr(process.env.CRYPTR_KEY);
+const Amount = require('../models/amount');
 
 const register = asyncHandler(async (req, res) => {
   const { firstName, middleName, lastName, phoneNumber, email, password } =
@@ -80,6 +79,10 @@ const register = asyncHandler(async (req, res) => {
       avatar,
       isVerified,
     } = user;
+
+    const amount = await Amount.create({
+      userId: _id,
+    });
 
     res.status(201).json({
       _id,
@@ -292,7 +295,7 @@ const getUser = asyncHandler(async (req, res) => {
       role,
       isVerified,
     } = user;
-    res.status(201).json({
+    res.status(200).json({
       _id,
       firstName,
       middleName,
@@ -389,7 +392,7 @@ const upgradeUser = asyncHandler(async (req, res) => {
 
   if (!user) {
     res.status(404);
-    throw new Error('User Not Found1. ');
+    throw new Error('User Not Found. ');
   }
 
   user.role = role;

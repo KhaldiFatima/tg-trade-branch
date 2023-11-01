@@ -79,9 +79,9 @@ const Profile = () => {
             <div>
               <img src={avatar} alt='Profile image' />
 
-              <p className={isVerified ? 'verified' : 'no-verified'}>
+              {/* <p className={isVerified ? 'verified' : 'no-verified'}>
                 {isVerified ? 'Verified' : 'Not Verified'}
-              </p>
+              </p> */}
             </div>
           </div>
           {/* onSubmit={delUser(id)} */}

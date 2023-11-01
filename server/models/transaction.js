@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const transactionsSchema = mongoose.Schema(
+const transactionSchema = mongoose.Schema(
   {
     userId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -15,23 +15,23 @@ const transactionsSchema = mongoose.Schema(
     type: {
       type: String,
       required: [true, 'Please add a   Transaction Type'],
-      // 'deposit', 'withdrawal'
+      // 'deposit', 'withdraw'
     },
-    Amount: {
+    amountTrans: {
       type: Number,
       required: [true, 'Please add a amount'],
     },
 
-    PaymentMethod: {
+    paymentMethod: {
       type: String,
       required: [true, 'Please add a Payment Method'],
       // paypal , payeer , perfect money
     },
-    Status: {
+    status: {
       type: String,
       required: true,
-      default: 'processing',
-      // 'processing', 'Accepted', 'Rejected'
+      default: 'pending',
+      // 'pending', 'Accepted', 'Rejected'
     },
   },
   {
@@ -39,7 +39,7 @@ const transactionsSchema = mongoose.Schema(
   }
 );
 
-const Transaction = mongoose.model('transaction', transactionsSchema);
+const Transaction = mongoose.model('transaction', transactionSchema);
 module.exports = Transaction;
 
 // lastMessage ? moment(lastMessage.date).format('hh:mm a') : '';

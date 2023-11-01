@@ -39,7 +39,7 @@ const adminOnly = asyncHandler(async (req, res, next) => {
     throw new Error('Not authorized as an admin');
   }
 });
-const userOnly = asyncHandler(async (req, res, next) => {
+const AdminUserOnly = asyncHandler(async (req, res, next) => {
   if (req.user.role === 'admin' || req.user.id === req.params.id) {
     next();
   } else {
@@ -73,5 +73,5 @@ module.exports = {
   verifiedOnly,
   adminOnly,
   usersOnly,
-  userOnly,
+  AdminUserOnly,
 };

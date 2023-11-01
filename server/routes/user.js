@@ -3,7 +3,7 @@ const router = express.Router();
 const {
   protect,
   adminOnly,
-  userOnly,
+  AdminUserOnly,
 } = require('../middleware/authMiddleware');
 const {
   login,
@@ -32,7 +32,7 @@ router.get('/logout', logout);
 router.get('/get-user', protect, getUser);
 router.patch('/update-user', protect, updateUser);
 
-router.delete('/delete-user/:id', protect, userOnly, deleteUser);
+router.delete('/delete-user/:id', protect, AdminUserOnly, deleteUser);
 router.get('/get-users', protect, adminOnly, getAllUsers);
 router.get('/login-status', loginStatus);
 router.post('/upgrade-user', protect, adminOnly, upgradeUser);

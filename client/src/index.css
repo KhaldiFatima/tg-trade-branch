@@ -317,6 +317,9 @@ p {
 .--py2 {
   padding: 2rem 0;
 }
+.--py1-5 {
+  padding: 1.5rem 0;
+}
 .--px {
   padding: 0 1rem;
 }
