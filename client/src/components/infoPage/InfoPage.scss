@@ -2,7 +2,8 @@
   height: 40vh;
   // background-color: red;
 
-  input[type='number'] {
+  input[type='number'],
+  input[type='text'] {
     display: block;
     font-size: 1.6rem;
     font-weight: 300;

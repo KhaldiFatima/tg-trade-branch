@@ -3,7 +3,7 @@ const { protect } = require('../middleware/authMiddleware');
 const { updateAmount, getAmount } = require('../controller/amountController');
 const router = express.Router();
 
-router.get('/get-amount', protect, getAmount);
+router.get('/amount', protect, getAmount);
 router.patch('/update-amount', protect, updateAmount);
 
 module.exports = router;

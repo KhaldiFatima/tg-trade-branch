@@ -23,7 +23,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin-bottom: 3rem;
+    // margin-bottom: 3rem;
 
     & img {
       width: 80px;
@@ -138,6 +138,18 @@
   text-shadow: 1px 1px 0px green;
   font-size: 1.3rem;
   text-align: center;
+}
+.money {
+  color: gray;
+  border-radius: 20px;
+  padding: 0.6rem;
+  text-shadow: 1px 1px 0px black;
+  font-size: 1.3rem;
+  text-align: center;
+  font-size: 1.7rem;
+  strong {
+    color: burlywood;
+  }
 }
 
 @media screen and (max-width: 1000px) {

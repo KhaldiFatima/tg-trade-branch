@@ -1,6 +1,7 @@
 const asyncHandler = require('express-async-handler');
 const User = require('../models/user');
 const Transaction = require('../models/transaction');
+const Amount = require('../models/amount');
 
 const requestDepositFunds = asyncHandler(async (req, res) => {
   const { type, amountTrans, paymentMethod } = req.body;
@@ -38,6 +39,7 @@ const requestDepositFunds = asyncHandler(async (req, res) => {
 
 const requestWithdrawFunds = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
+  const amountUser = await Amount.findOne({ userId: req.user._id });
 
   const userId = user.id;
   const { type, amountTrans, paymentMethod } = req.body;
@@ -45,7 +47,7 @@ const requestWithdrawFunds = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error('Please fill in all the required fields.');
   }
-  if (amountTrans > totalAmount.amount) {
+  if (amountTrans > amountUser.amount) {
     res.status(400);
     throw new Error(`You don't have enough money to pull it.`);
   }

@@ -36,7 +36,7 @@ const updateAmount = asyncHandler(async (req, res) => {
   if (status === 'accept') {
     if (type === 'deposit') {
       totalAmountUser.amount += amountTrans;
-    } else {
+    } else if (type === 'withdrawal') {
       totalAmountUser.amount -= amountTrans;
     }
   }

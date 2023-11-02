@@ -303,7 +303,9 @@ p {
 .--mx2 {
   margin: 0 2rem;
 }
-
+.--mr3 {
+  margin-right: 3rem;
+}
 /* Padding */
 .--p {
   padding: 1rem;
@@ -371,6 +373,38 @@ p {
   background: #fff;
   border: #030b6b 1px solid;
   box-shadow: 0 0 5px 0 #030b6b;
+}
+
+.--btn-line-red {
+  color: red;
+  background: #fff;
+  border: #ff000075 1px solid;
+  /* border-radius: 17px; */
+  box-shadow: 0 0 5px 0 #ff000078;
+}
+.--td-red {
+  color: red;
+  background: #fff;
+  border: #ff00002e 1px solid;
+  border-radius: 7px;
+  text-align: center;
+  padding: 3px;
+}
+.--btn-td-green {
+  color: green;
+  background: #fff;
+  border: #00800052 1px solid;
+  border-radius: 7px;
+  text-align: center;
+  padding: 3px;
+}
+.--p-td {
+  color: steelblue;
+  background: #fff;
+  border: #4682b463 1px solid;
+  border-radius: 7px;
+  text-align: center;
+  padding: 3px;
 }
 
 .--btn-secondary {
@@ -539,7 +573,7 @@ a:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 2rem 0;
+  margin: 2rem 0 1rem;
   font-size: 1rem;
 }
 
@@ -548,7 +582,7 @@ a:hover {
   cursor: pointer;
   border-radius: 3px;
   font-weight: normal;
-  color: #333;
+  /* color: #333; */
   border: 1px solid #333;
   margin: 2px;
 }
@@ -559,7 +593,7 @@ a:hover {
 }
 .activePage {
   color: #fff;
-  background-color: var(--light-blue);
+  background-color: steelblue;
   height: 100%;
 }
 

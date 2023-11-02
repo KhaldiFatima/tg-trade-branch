@@ -34,6 +34,8 @@ import Payment from './components/methodPayment/Payment';
 import Withdrawal from './pages/Withdrawal';
 import Dashboard from './dashboard/home/DashboardOverViw';
 import Profile from './pages/profile/Profile';
+import Loader, { LoaderImage } from './components/loader/Loader';
+import { getAmount } from './redux/features/amount/amountSlice';
 
 axios.defaults.withCredentials = true;
 
@@ -44,8 +46,12 @@ function App() {
 
   useEffect(() => {
     dispatch(getLoginStatus());
+
     if (isLoggedIn && user === null) {
       dispatch(getUser());
+    }
+    if (isLoggedIn) {
+      dispatch(getAmount());
     }
   }, [dispatch, isLoggedIn, user]);
 
@@ -59,6 +65,15 @@ function App() {
             <Layout>
               <WelcomePage />
             </Layout>
+          }
+        ></Route>
+        <Route
+          path='/loader'
+          element={
+            <>
+              <LoaderImage />
+              <Loader />
+            </>
           }
         ></Route>
         <Route path='/login' element={<Login />}></Route>

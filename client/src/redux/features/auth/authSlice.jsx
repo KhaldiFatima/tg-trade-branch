@@ -5,13 +5,15 @@ import { toast } from 'react-toastify';
 const initialState = {
   isLoggedIn: false,
   user: null,
-  userID: null,
+  thisUser: null,
   users: [],
   twoFactor: false,
   isError: false,
   isSuccess: false,
   isLoading: false,
   message: '',
+  verifiedUsers: 0,
+  suspendedUsers: 0,
 };
 
 export const register = createAsyncThunk(
@@ -270,6 +272,34 @@ const authSlice = createSlice({
       state.isLoading = false;
       state.message = '';
     },
+    CALC_VERIFIED_USER(state) {
+      const array = [];
+      state.users.map((user) => {
+        const { isVerified } = user;
+        return array.push(isVerified);
+      });
+      let count = 0;
+      array.forEach((item) => {
+        if (item === true) {
+          count += 1;
+        }
+      });
+      state.verifiedUsers = count;
+    },
+    CALC_SUSPENDED_USER(state) {
+      const array = [];
+      state.users.map((user) => {
+        const { role } = user;
+        return array.push(role);
+      });
+      let count = 0;
+      array.forEach((item) => {
+        if (item === 'suspended') {
+          count += 1;
+        }
+      });
+      state.suspendedUsers = count;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -516,8 +546,8 @@ const authSlice = createSlice({
       .addCase(getUserWithId.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.userID = action.payload;
         console.log(action);
+        state.thisUser = action.payload;
       })
       .addCase(getUserWithId.rejected, (state, action) => {
         state.isLoading = false;
@@ -528,7 +558,8 @@ const authSlice = createSlice({
   },
 });
 
-export const { RESET } = authSlice.actions;
+export const { RESET, CALC_VERIFIED_USER, CALC_SUSPENDED_USER } =
+  authSlice.actions;
 export const selectIsLoggedIn = (state) => state.auth.isLoggedIn;
 export const selectUser = (state) => state.auth.user;
 export default authSlice.reducer;

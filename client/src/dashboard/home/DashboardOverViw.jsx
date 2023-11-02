@@ -7,8 +7,6 @@ const Dashboard = () => {
       <OverView />
 
       <TransactionUsers />
-      <TransactionUsers />
-      <TransactionUsers />
     </>
   );
 };

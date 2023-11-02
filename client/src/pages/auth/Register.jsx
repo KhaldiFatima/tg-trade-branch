@@ -23,7 +23,6 @@ const initialData = {
   firstName: '',
   middleName: '',
   lastName: '',
-
   email: '',
   password: '',
   password2: '',
@@ -85,7 +84,9 @@ const Register = () => {
     };
     console.log(userData);
     await dispatch(register(userData));
-    await dispatch(sendVerificationEmail());
+    if (isSuccess) {
+      await dispatch(sendVerificationEmail());
+    }
   };
 
   useEffect(() => {

@@ -1,8 +1,7 @@
 import { FaTrashAlt } from 'react-icons/fa';
 import PhoneNumberInput from '../../components/Input/PhoneNumberInput';
-import ShowSpinnerOrText from '../../components/helpper/ShowSpinnerOrText';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteUser, getUsers } from '../../redux/features/auth/authSlice';
+import { deleteUser, getUserWithId } from '../../redux/features/auth/authSlice';
 import { TbArrowBackUpDouble } from 'react-icons/tb';
 // import img from '../../assets/New folder/p.png';
 
@@ -13,28 +12,26 @@ import { Link, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 
 const Profile = () => {
-  const { user } = useSelector((state) => state.auth);
+  const { thisUser } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
-  const ID = useParams();
-
-  // useEffect(() => {
-  //   dispatch(getUserWithId(ID));
-  // }, [dispatch, ID]);
+  const userId = useParams();
+  const id = userId.id;
   useEffect(() => {
-    dispatch(getUsers());
-  }, [dispatch]);
+    dispatch(getUserWithId(id));
+  }, [dispatch, id]);
 
+  console.log(thisUser);
   const profile = {
-    id: user?._id || '',
-    firstName: user?.firstName || '',
-    middleName: user?.middleName,
-    lastName: user?.lastName || '',
-    email: user?.email || '',
-    phoneNumber: user?.phoneNumber || '',
-    avatar: user?.avatar || '',
-    role: user?.role || '',
-    isVerified: user?.isVerified || false,
+    id: thisUser?._id || '',
+    firstName: thisUser?.firstName || '',
+    middleName: thisUser?.middleName,
+    lastName: thisUser?.lastName || '',
+    email: thisUser?.email || '',
+    phoneNumber: thisUser?.phoneNumber || '',
+    avatar: thisUser?.avatar || '',
+    role: thisUser?.role || '',
+    isVerified: thisUser?.isVerified || false,
   };
 
   const {
@@ -53,7 +50,8 @@ const Profile = () => {
     await dispatch(deleteUser(id));
   };
 
-  const confirmDelete = (id) => {
+  const confirmDelete = (e, id) => {
+    e.preventDefault();
     confirmAlert({
       title: 'Delete This User',
       message: 'Are you sure to do delete this user?',
@@ -75,17 +73,21 @@ const Profile = () => {
     <div className='--flex-center profile'>
       <div className='user-summary'>
         <div className='--flex-center --dir-column' key={_id}>
-          <div className='profile-photo'>
-            <div>
-              <img src={avatar} alt='Profile image' />
+          <div className='profile-photo --mr2'>
+            <>
+              <img src={avatar} alt='Profile image' className='--mb' />
 
-              {/* <p className={isVerified ? 'verified' : 'no-verified'}>
+              <p className={isVerified ? 'verified' : 'no-verified'}>
                 {isVerified ? 'Verified' : 'Not Verified'}
-              </p> */}
-            </div>
+              </p>
+
+              <p className='money --mt'>
+                100 <strong>$</strong>
+              </p>
+            </>
           </div>
           {/* onSubmit={delUser(id)} */}
-          <form>
+          <form className='--mt'>
             <div className='--flex-between '>
               <div className='--mr2'>
                 <p>
@@ -117,7 +119,7 @@ const Profile = () => {
                 </p>
               </div>
             </div>
-            <div className='--flex-between --my2'>
+            <div className='--flex-between --my'>
               <Link to='/dashboard/users'>
                 <TbArrowBackUpDouble size={25} color='#ee7483' />
                 Go Back
@@ -125,12 +127,10 @@ const Profile = () => {
               <button
                 type='submit'
                 className='--btn --btn-line --flex-start'
-                onClick={() => confirmDelete(_id)}
+                onClick={(e) => confirmDelete(e, _id)}
               >
-                <ShowSpinnerOrText
-                  text={'Delete Profile'}
-                  icon={<FaTrashAlt size={20} color='red' />}
-                />
+                Delete Profile&nbsp;
+                <FaTrashAlt size={20} color='red' />
               </button>
             </div>
           </form>

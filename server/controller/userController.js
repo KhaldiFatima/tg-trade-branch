@@ -648,10 +648,10 @@ const loginWithCode = asyncHandler(async (req, res) => {
 });
 
 const getUserWithId = asyncHandler(async (req, res) => {
-  const { id } = req.params;
-  const user = await User.findById(id);
+  const user = await User.findById(req.params.id);
   if (user) {
     const {
+      _id,
       firstName,
       middleName,
       lastName,
@@ -661,7 +661,9 @@ const getUserWithId = asyncHandler(async (req, res) => {
       role,
       isVerified,
     } = user;
-    res.status(201).json({
+
+    res.status(200).json({
+      _id,
       firstName,
       middleName,
       lastName,

@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { RESET, logout } from '../../redux/features/auth/authSlice';
 import { AdminLink, ShowOnLogin, ShowOnLogout } from '../helpper/hiddenLinks';
 import UserName from '../userName/UserName';
+import { RESET_A } from '../../redux/features/amount/amountSlice';
 
 const activeLink = ({ isActive }) => (isActive ? 'active' : '');
 const Header = () => {
@@ -14,6 +15,7 @@ const Header = () => {
 
   const logoutUser = async () => {
     dispatch(RESET());
+    dispatch(RESET_A());
     await dispatch(logout());
     navigate('/');
   };
@@ -43,11 +45,6 @@ const Header = () => {
                 Profile
               </NavLink>
             </li>
-            <li>
-              <button className='--btn --btn-secondary' onClick={logoutUser}>
-                Logout
-              </button>
-            </li>
 
             <AdminLink>
               <li>
@@ -58,6 +55,11 @@ const Header = () => {
                 </button>
               </li>
             </AdminLink>
+            <li>
+              <button className='--btn --btn-secondary' onClick={logoutUser}>
+                Logout
+              </button>
+            </li>
           </ShowOnLogin>
           <ShowOnLogout>
             <li>

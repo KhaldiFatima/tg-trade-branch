@@ -10,23 +10,23 @@ const MethodPayment = () => {
         <label htmlFor='payeer'>
           &nbsp;&nbsp; <img src={payeerImg}></img>
         </label>
-        <input type='radio' id='payeer' value='payeer' />
+        <input name='payment_method' type='radio' id='payeer' value='payeer' />
       </div>
       <div className='--flex-around --mb2'>
         <label htmlFor='paypal'>
           &nbsp;&nbsp;
           <img src={paypalImg}></img>
         </label>
-        <input type='radio' id='paypal' value='paypal' />
+        <input name='payment_method' type='radio' id='paypal' value='paypal' />
       </div>
       <div className='--flex-around --mb2'>
         <label htmlFor='perfectMoney'>
           &nbsp;&nbsp; <img src={perfectMoneyImg}></img>
         </label>
         <input
+          name='payment_method'
           type='radio'
           id='perfectMoney'
-          name='fav_language'
           value='perfectMoney'
         />
       </div>

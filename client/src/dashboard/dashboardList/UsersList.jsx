@@ -18,6 +18,7 @@ import {
   filter_users,
   selectUsers,
 } from '../../redux/features/auth/filterSlice';
+import ReactPaginate from 'react-paginate';
 
 const UsersList = () => {
   const dispatch = useDispatch();
@@ -59,10 +60,23 @@ const UsersList = () => {
   useEffect(() => {
     dispatch(filter_users({ users, search }));
   }, [dispatch, users, search]);
+
+  const [itemOffset, setItemOffset] = useState(0);
+
+  const itemsPerPage = 5;
+  const endOffset = itemOffset + itemsPerPage;
+  const currentItems = filteredUsers.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(filteredUsers.length / itemsPerPage);
+
+  const handlePageClick = (event) => {
+    const newOffset = (event.selected * itemsPerPage) % filteredUsers.length;
+    setItemOffset(newOffset);
+  };
+
   return (
     <>
       {/* <div className='--flex-between'> */}
-      <div className='user-summary --mt  user-list --mr'>
+      <div className='user-summary   user-list '>
         {isLoading && <Loader />}
         <div className='table'>
           <div className='--flex-between'>
@@ -76,7 +90,7 @@ const UsersList = () => {
               />
             </span>
           </div>
-
+          <br />
           {!isLoading && users.length === 0 ? (
             <p>No user found ... </p>
           ) : (
@@ -92,12 +106,12 @@ const UsersList = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredUsers.map((user, index) => {
+                {currentItems.map((user, index) => {
                   const { _id, firstName, lastName, email, role } = user;
                   const name = firstName + ' ' + lastName;
                   return (
                     <tr key={_id}>
-                      <td>{index + 1}</td>
+                      <td>{itemOffset + index + 1}</td>
                       <td>{shortenText(name, 15)}</td>
                       <td>{email}</td>
                       <td>{role}</td>
@@ -105,7 +119,7 @@ const UsersList = () => {
                         <ChangeRole id={_id} email={email} />
                       </td>
                       <td>
-                        <span>
+                        <span className='--flex-around'>
                           <FaTrashAlt
                             size={20}
                             color='red'
@@ -115,7 +129,6 @@ const UsersList = () => {
                           <ImProfile
                             size={20}
                             color='steelblue'
-                            className='--ml2'
                             onClick={() => showProfile(_id)}
                           />
                         </span>
@@ -127,6 +140,20 @@ const UsersList = () => {
             </table>
           )}
         </div>
+        <ReactPaginate
+          breakLabel='...'
+          nextLabel='>'
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={3}
+          pageCount={pageCount}
+          previousLabel='<'
+          renderOnZeroPageCount={null}
+          containerClassName='pagination'
+          pageLinkClassName='page-num'
+          previousLinkClassName='page-num'
+          nextLinkClassName='page-num'
+          activeLinkClassName='activePage'
+        />
       </div>
     </>
   );
