@@ -21,8 +21,10 @@ app.use(
   cors({
     origin: [
       'http://localhost:5173',
-      'https://tg-trade-branch.netlify.app',
-      'https://main--tg-trade-branch.netlify.app',
+      'https://tg-trade.netlify.app',
+      'https://main--tg-trade.netlify.app',
+      'https://tg-trade.netlify.app/',
+      'https://main--tg-trade.netlify.app/',
     ],
     //     // origin: true,
     //     // origin: '*',
