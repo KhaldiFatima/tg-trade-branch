@@ -12,8 +12,10 @@ import { RESET, forgotPassword } from '../../redux/features/auth/authSlice';
 
 import ShowSpinnerOrText from '../../components/helpper/ShowSpinnerOrText';
 import Loader from '../../components/loader/Loader';
+import useRedirectLoggedInUser from '../../customHook/useRedirectLoggedInUser';
 
 const Forgot = () => {
+  useRedirectLoggedInUser('/');
   const [email, setEmail] = useState('');
   const dispatch = useDispatch();
 
@@ -35,7 +37,7 @@ const Forgot = () => {
     };
 
     await dispatch(forgotPassword(userData));
-    await dispatch(RESET(userData));
+    await dispatch(RESET());
   };
   return (
     <div className={`container  ${styles.auth}`}>

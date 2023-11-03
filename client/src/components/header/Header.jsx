@@ -7,11 +7,17 @@ import { RESET, logout } from '../../redux/features/auth/authSlice';
 import { AdminLink, ShowOnLogin, ShowOnLogout } from '../helpper/hiddenLinks';
 import UserName from '../userName/UserName';
 import { RESET_A } from '../../redux/features/amount/amountSlice';
+import { useState } from 'react';
+// import Cookies from 'js-cookie';
 
 const activeLink = ({ isActive }) => (isActive ? 'active' : '');
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  // const init = Cookies.get('isShowHome');
+  // console.log(init);
+  const [isShowHome, setIsShowHome] = useState(false);
 
   const logoutUser = async () => {
     dispatch(RESET());
@@ -21,11 +27,9 @@ const Header = () => {
   };
 
   // useEffect(() => {
-  //   if (isSuccess) {
-  //     navigate('/');
-  //   }
-  //   dispatch(RESET());
-  // }, [isSuccess, navigate, dispatch]);
+  //   Cookies.set('isShowHome', isShowHome);
+  // }, [isShowHome]);
+
   return (
     <header className='header'>
       <Logo color={'#fff'} />
@@ -39,15 +43,30 @@ const Header = () => {
               &nbsp;
               <FaUserCircle size={20} />
             </li>
-
-            <li>
-              <NavLink to='/profile' className={activeLink}>
-                Profile
-              </NavLink>
-            </li>
+            {isShowHome === true ? (
+              <li
+                onClick={() => {
+                  setIsShowHome(false);
+                }}
+              >
+                <NavLink to='/Home' className={activeLink}>
+                  Home
+                </NavLink>
+              </li>
+            ) : (
+              <li>
+                <NavLink to='/profile' className={activeLink}>
+                  Profile
+                </NavLink>
+              </li>
+            )}
 
             <AdminLink>
-              <li>
+              <li
+                onClick={() => {
+                  setIsShowHome(true);
+                }}
+              >
                 <button className='--btn --btn-secondary'>
                   <NavLink to='/dashboard' className={activeLink}>
                     Dashboard

@@ -6,7 +6,7 @@ const initialState = {
   amount: 0,
   isError: false,
   isSuccess: false,
-  isLoading: false,
+  isLoadingA: false,
   message: '',
 };
 
@@ -51,7 +51,7 @@ const amountSlice = createSlice({
     RESET_A(state) {
       state.isError = false;
       state.isSuccess = false;
-      state.isLoading = false;
+      state.isLoadingA = false;
       state.message = '';
     },
   },
@@ -59,33 +59,33 @@ const amountSlice = createSlice({
     builder
       // --------------- get User ------------------//
       .addCase(getAmount.pending, (state) => {
-        state.isLoading = true;
+        state.isLoadingA = true;
       })
       .addCase(getAmount.fulfilled, (state, action) => {
-        state.isLoading = false;
+        state.isLoadingA = false;
         state.isSuccess = true;
         state.amount = action.payload;
         console.log(action.payload);
       })
       .addCase(getAmount.rejected, (state, action) => {
-        state.isLoading = false;
+        state.isLoadingA = false;
         state.isError = true;
         state.message = action.payload;
         toast.error(action.payload);
       })
       // --------------- update Amount ------------------//
       .addCase(updateAmount.pending, (state) => {
-        state.isLoading = true;
+        state.isLoadingA = true;
       })
       .addCase(updateAmount.fulfilled, (state, action) => {
-        state.isLoading = false;
+        state.isLoadingA = false;
         state.isSuccess = true;
         state.amount = action.payload;
         toast.success('User amount updated');
         console.log(action.payload);
       })
       .addCase(updateAmount.rejected, (state, action) => {
-        state.isLoading = false;
+        state.isLoadingA = false;
         state.isError = true;
         state.message = action.payload;
         toast.error(action.payload);

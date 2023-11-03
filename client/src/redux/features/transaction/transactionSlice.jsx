@@ -7,10 +7,10 @@ const initialState = {
   transaction: null,
   transactionUser: [],
   transactions: [],
-  isError: false,
-  isSuccess: false,
-  isLoading: false,
-  message: '',
+  isError_T: false,
+  isSuccess_T: false,
+  isLoading_T: false,
+  message_T: '',
   pendingTransactions: 0,
   deposits: 0,
   withdrawals: 0,
@@ -56,10 +56,10 @@ const transactionSlice = createSlice({
   initialState,
   reducers: {
     RESET(state) {
-      state.isError = false;
-      state.isSuccess = false;
-      state.isLoading = false;
-      state.message = '';
+      state.isError_T = false;
+      state.isSuccess_T = false;
+      state.isLoading_T = false;
+      state.message_T = '';
     },
     CALC_PENDING_TRANSACTIONS(state) {
       const array = [];
@@ -122,32 +122,32 @@ const transactionSlice = createSlice({
     builder
       // --------------- get All transactions ------------------//
       .addCase(getAllTransactions.pending, (state) => {
-        state.isLoading = true;
+        state.isLoading_T = true;
       })
       .addCase(getAllTransactions.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isSuccess = true;
+        state.isLoading_T = false;
+        state.isSuccess_T = true;
         state.transactions = action.payload;
       })
       .addCase(getAllTransactions.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.message = action.payload;
+        state.isLoading_T = false;
+        state.isError_T = true;
+        state.message_T = action.payload;
         toast.error(action.payload);
       })
       // --------------- get USer transactions ------------------//
       .addCase(getUSerTransactions.pending, (state) => {
-        state.isLoading = true;
+        state.isLoading_T = true;
       })
       .addCase(getUSerTransactions.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isSuccess = true;
+        state.isLoading_T = false;
+        state.isSuccess_T = true;
         state.transactionUser = action.payload;
       })
       .addCase(getUSerTransactions.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.message = action.payload;
+        state.isLoading_T = false;
+        state.isError_T = true;
+        state.message_T = action.payload;
         toast.error(action.payload);
       });
   },

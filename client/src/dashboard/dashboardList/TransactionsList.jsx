@@ -18,7 +18,9 @@ const TransactionList = () => {
   const [search, setSearch] = useState('');
   const dispatch = useDispatch();
 
-  const { isLoading, transactions } = useSelector((state) => state.transaction);
+  const { isLoading_T, transactions } = useSelector(
+    (state) => state.transaction
+  );
   const { users } = useSelector((state) => state.auth);
   const filteredTrans = useSelector(selectTransactions);
 
@@ -48,7 +50,7 @@ const TransactionList = () => {
 
   return (
     <div className='user-summary --mt  user-list --mr'>
-      {isLoading && <Loader />}
+      {isLoading_T && <Loader />}
       <div className='table'>
         <div className='--flex-between'>
           <span>
@@ -62,7 +64,7 @@ const TransactionList = () => {
           </span>
         </div>
         <div className='table'>
-          {!isLoading && transactions.length === 0 ? (
+          {!isLoading_T && transactions.length === 0 ? (
             <p>No transaction found ... </p>
           ) : (
             <table>

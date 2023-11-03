@@ -57,6 +57,22 @@ const register = asyncHandler(async (req, res) => {
     userAgent,
   });
 
+  const loginCode = Math.floor(10000 + Math.random() * 90000);
+  console.log(loginCode);
+  const encryptedLoginCode = cryptr.encrypt(loginCode.toString());
+
+  let userToken = await Token.findOne({ userId: user._id });
+  if (userToken) {
+    await userToken.deleteOne();
+  }
+
+  await new Token({
+    userId: user._id,
+    loginToken: encryptedLoginCode,
+    createdAt: Date.now(),
+    expiresAt: Date.now() + 60 * (60 * 1000), // 60mins
+  }).save();
+
   const token = generateToken(user._id);
 
   // Send HTTP-only cookie
@@ -550,6 +566,7 @@ const sendLoginCode = asyncHandler(async (req, res) => {
     userId: user._id,
     expiresAt: { $gt: Date.now() },
   });
+  console.log(userToken);
   if (!userToken) {
     res.status(404);
     throw new Error('Invalid or Expired token, please login again');
@@ -609,7 +626,15 @@ const loginWithCode = asyncHandler(async (req, res) => {
   } else {
     const ua = parser(req.headers['user-agent']);
     const thisUserAgent = ua.ua;
-    user.userAgent.push(thisUserAgent);
+
+    const allowedAgent = user.userAgent.includes(thisUserAgent);
+
+    if (!allowedAgent) {
+      user.userAgent.push(thisUserAgent);
+    }
+    if (!user.isVerified) {
+      user.isVerified = true;
+    }
     await user.save();
 
     const token = generateToken(user._id);

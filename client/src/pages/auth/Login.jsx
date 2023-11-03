@@ -10,19 +10,27 @@ import { toast } from 'react-toastify';
 import { useEffect, useState } from 'react';
 import { validateEmail } from '../../redux/features/auth/authService';
 import { useDispatch, useSelector } from 'react-redux';
-import { RESET, login } from '../../redux/features/auth/authSlice';
+import {
+  RESET,
+  login,
+  sendLoginCode,
+} from '../../redux/features/auth/authSlice';
 
 import ShowSpinnerOrText from '../../components/helpper/ShowSpinnerOrText';
+import useRedirectLoggedInUser from '../../customHook/useRedirectLoggedInUser';
 
 const initialState = {
   email: '',
   password: '',
 };
 const Login = () => {
+  useRedirectLoggedInUser('/');
   const [formData, setFormData] = useState(initialState);
   const { email, password } = formData;
 
-  const { isLoggedIn, isSuccess } = useSelector((state) => state.auth);
+  const { isLoggedIn, isSuccess, isError, twoFactor } = useSelector(
+    (state) => state.auth
+  );
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -52,10 +60,14 @@ const Login = () => {
   useEffect(() => {
     if (isSuccess && isLoggedIn) {
       navigate('/home');
+      dispatch(RESET());
     }
-
-    dispatch(RESET());
-  }, [isSuccess, isLoggedIn, navigate, dispatch]);
+    if (isError && twoFactor) {
+      navigate(`/Login-with-code/${email}`);
+      console.log(email);
+      dispatch(sendLoginCode(email));
+    }
+  }, [isSuccess, isLoggedIn, navigate, dispatch, isError, twoFactor, email]);
 
   return (
     <div className={`container  ${styles.auth}`}>

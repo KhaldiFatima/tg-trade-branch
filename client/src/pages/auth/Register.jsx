@@ -12,13 +12,10 @@ import PassStrength from '../../components/Input/PassStrength';
 import { toast } from 'react-toastify';
 import { validateEmail } from '../../redux/features/auth/authService';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  RESET,
-  register,
-  sendVerificationEmail,
-} from '../../redux/features/auth/authSlice';
+import { register, sendLoginCode } from '../../redux/features/auth/authSlice';
 
 import ShowSpinnerOrText from '../../components/helpper/ShowSpinnerOrText';
+import useRedirectLoggedInUser from '../../customHook/useRedirectLoggedInUser';
 const initialData = {
   firstName: '',
   middleName: '',
@@ -29,6 +26,7 @@ const initialData = {
 };
 
 const Register = () => {
+  useRedirectLoggedInUser('/');
   const [formData, setFormData] = useState(initialData);
   const { firstName, middleName, lastName, email, password, password2 } =
     formData;
@@ -39,7 +37,7 @@ const Register = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { isLoggedIn, isSuccess } = useSelector((state) => state.auth);
+  const { isSuccess, sendCode } = useSelector((state) => state.auth);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -84,18 +82,14 @@ const Register = () => {
     };
     console.log(userData);
     await dispatch(register(userData));
-    if (isSuccess) {
-      await dispatch(sendVerificationEmail());
-    }
   };
 
   useEffect(() => {
-    if (isLoggedIn && isSuccess) {
-      navigate('/home');
+    if (isSuccess && sendCode) {
+      navigate(`/Login-with-code/${email}`);
+      dispatch(sendLoginCode(email));
     }
-
-    dispatch(RESET());
-  }, [isLoggedIn, isSuccess, navigate, dispatch]);
+  }, [sendCode, isSuccess, email, navigate, dispatch]);
 
   return (
     <div className={`container  ${styles.auth}`}>

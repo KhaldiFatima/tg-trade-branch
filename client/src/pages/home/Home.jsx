@@ -21,9 +21,10 @@ const Home = () => {
   const { isLoading, transactionUser, pendingTransUser } = useSelector(
     (state) => state.transaction
   );
-  const { amount } = useSelector((state) => state.amount);
-  console.log(amount);
-  const userAmount = `${amount.amount} $`;
+  const { amount, isLoadingA } = useSelector((state) => state.amount);
+
+  const userAmount = isLoadingA ? `Amount $` : `${amount.amount} $`;
+
   useEffect(() => {
     dispatch(getUSerTransactions());
     dispatch(CALC_PENDING_USER());

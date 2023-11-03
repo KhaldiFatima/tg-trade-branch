@@ -2,18 +2,60 @@ import Card from '../../components/card/Card';
 import { GrInsecure } from 'react-icons/gr';
 import styles from './auth.module.scss';
 import verifyImg from '../../assets/New folder/email.jpg';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import Logo from '../../components/logo/Logo';
-import { useState } from 'react';
-import ShowSpinnerOrText from '../../components/helpper/ShowSpinnerOrText';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  RESET,
+  loginWithCode,
+  sendLoginCode,
+} from '../../redux/features/auth/authSlice';
+import { toast } from 'react-toastify';
+import Loader from '../../components/loader/Loader';
 
 const LoginWithCode = () => {
-  const [accessCode, setAccessCode] = useState('');
+  const [loginCode, setLoginCode] = useState('');
+  const { sendCode, isSuccess, twoFactor, isLoading } = useSelector(
+    (state) => state.auth
+  );
 
-  const loginUser = () => {};
+  const { email } = useParams();
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const sendUserLoginCode = async () => {
+    await dispatch(sendLoginCode(email));
+    await dispatch(RESET());
+  };
+
+  const loginUser = async (e) => {
+    e.preventDefault();
+
+    if (loginCode === '') {
+      return toast.error('Please fill in the login code');
+    }
+    if (loginCode.length !== 5) {
+      return toast.error('Access code must be 5 characters');
+    }
+
+    const code = {
+      loginCode,
+    };
+    console.log(email, code);
+    await dispatch(loginWithCode({ code, email }));
+  };
+
+  useEffect(() => {
+    if (!sendCode && isSuccess) {
+      navigate('/home');
+    }
+  }, [isSuccess, sendCode, navigate, dispatch]);
 
   return (
     <div className={`container  ${styles.auth}`}>
+      {isLoading && <Loader />}
       <Card>
         <div className={`${styles.form} --dir-column`}>
           <br />
@@ -22,41 +64,54 @@ const LoginWithCode = () => {
           <img className={styles.img} src={verifyImg} alt='verify Image' />
           <div className={styles.cardForm}>
             <form onSubmit={loginUser}>
-              <label className='--text-p --color-primary' htmlFor='accessCode'>
+              <label className='--text-p --color-primary' htmlFor='loginCode'>
                 Entre Access Code :
               </label>
               <input
-                id='accessCode'
+                // id='loginCode'
                 type='number'
                 placeholder='Access Code'
-                name='accessCode'
-                value={accessCode}
+                name='loginCode'
+                value={loginCode}
                 onChange={(e) => {
-                  e.target.value;
+                  setLoginCode(e.target.value);
                 }}
-                required
               />
               <button type='submit' className='--btn --btn-logo --btn-block'>
-                <ShowSpinnerOrText
-                  text={'Proceed To Login'}
-                  icon={<GrInsecure className={styles.btn} />}
-                />
+                Proceed To Login
+                <GrInsecure className={styles.btn} />
               </button>
               <p className='--flex-start'>
-                <div>
-                  Check your email for login access code <b>&nbsp; OR &nbsp;</b>
-                  <Link className='--fw-bold' to='/home'>
-                    Skip
-                  </Link>
-                </div>
+                <div>Check your email for login access code</div>
               </p>
             </form>
             <br />
             <div className='--flex-between'>
-              <p>
-                <Link to='/login'>Go Back</Link>
+              {twoFactor ? (
+                <p>
+                  <Link
+                    className='--fw-bold'
+                    to='/login'
+                    // onClick={() => dispatch(RESET())}
+                  >
+                    Go Back
+                  </Link>
+                </p>
+              ) : (
+                <p>
+                  <Link className='--fw-bold' to='/home'>
+                    Skip
+                  </Link>
+                </p>
+              )}
+              <p
+                className=' --color-primary --fw-bold cursor'
+                onClick={() => {
+                  sendUserLoginCode();
+                }}
+              >
+                Resent Code
               </p>
-              <p className=' --color-primary --fw-bold'>Resent Code</p>
             </div>
           </div>
         </div>

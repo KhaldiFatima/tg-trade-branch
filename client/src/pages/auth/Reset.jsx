@@ -12,12 +12,14 @@ import { resetPassword, RESET } from '../../redux/features/auth/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import ShowSpinnerOrText from '../../components/helpper/ShowSpinnerOrText';
+import useRedirectLoggedInUser from '../../customHook/useRedirectLoggedInUser';
 
 const initialData = {
   newPassword: '',
   newPassword2: '',
 };
 const Reset = () => {
+  useRedirectLoggedInUser('/');
   const [newPass, setNewPass] = useState(initialData);
   const { newPassword, newPassword2 } = newPass;
 

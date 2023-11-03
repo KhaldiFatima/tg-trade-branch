@@ -88,6 +88,19 @@ const getUserWithId = async (id) => {
   return await response.data;
 };
 
+const sendLoginCode = async (email) => {
+  const response = await axios.post(`${API_URL}/send-login-code/${email}`);
+  return await response.data;
+};
+
+const loginWithCode = async ({ code, email }) => {
+  const response = await axios.post(
+    `${API_URL}/login-with-code/${email}`,
+    code
+  );
+  return await response.data;
+};
+
 const authService = {
   register,
   login,
@@ -104,6 +117,8 @@ const authService = {
   deleteUser,
   upgradeUser,
   getUserWithId,
+  sendLoginCode,
+  loginWithCode,
 };
 
 export default authService;

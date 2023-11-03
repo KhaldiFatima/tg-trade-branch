@@ -8,6 +8,7 @@ const initialState = {
   thisUser: null,
   users: [],
   twoFactor: false,
+  sendCode: false,
   isError: false,
   isSuccess: false,
   isLoading: false,
@@ -244,6 +245,40 @@ export const upgradeUser = createAsyncThunk(
   }
 );
 
+export const sendLoginCode = createAsyncThunk(
+  'auth/sendLoginCode',
+  async (email, thunkAPI) => {
+    try {
+      return await authService.sendLoginCode(email);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const loginWithCode = createAsyncThunk(
+  'auth/loginWithCode',
+  async ({ code, email }, thunkAPI) => {
+    try {
+      return await authService.loginWithCode({ code, email });
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const getUserWithId = createAsyncThunk(
   'auth/getUserWithId',
   async (id, thunkAPI) => {
@@ -267,6 +302,7 @@ const authSlice = createSlice({
   reducers: {
     RESET(state) {
       state.twoFactor = false;
+      state.sendCode = false;
       state.isError = false;
       state.isSuccess = false;
       state.isLoading = false;
@@ -312,6 +348,7 @@ const authSlice = createSlice({
         state.isSuccess = true;
         state.isLoggedIn = true;
         state.user = action.payload;
+        state.sendCode = true;
         toast.success('Registration successful');
         console.log(action.payload);
       })
@@ -340,6 +377,9 @@ const authSlice = createSlice({
         state.user = null;
         state.message = action.payload;
         toast.error(action.payload);
+        if (action.payload.includes('New browser')) {
+          state.twoFactor = true;
+        }
       })
       // --------------- logout ------------------//
       .addCase(logout.pending, (state) => {
@@ -553,6 +593,43 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
+        toast.error(action.payload);
+      })
+      // --------------- send Login Code ------------------//
+      .addCase(sendLoginCode.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(sendLoginCode.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.message = action.payload;
+        toast.success(action.payload);
+      })
+      .addCase(sendLoginCode.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        toast.error(action.payload);
+      })
+      // --------------- login With Code ------------------//
+
+      .addCase(loginWithCode.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(loginWithCode.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.isLoggedIn = true;
+        state.twoFactor = false;
+        state.sendCode = false;
+        state.user = action.payload;
+        toast.success(action.payload);
+      })
+      .addCase(loginWithCode.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        state.user = null;
         toast.error(action.payload);
       });
   },
