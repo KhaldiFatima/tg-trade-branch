@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deleteUser, logout } from '../../redux/features/auth/authSlice';
 import { confirmAlert } from 'react-confirm-alert';
 import useRedirectLoggedOutUser from '../../customHook/useRedirectLoggedOutUser';
+import { deleteTransactionsUser } from '../../redux/features/transaction/transactionSlice';
 
 const PageMenuProfile = () => {
   const { user } = useSelector((state) => state.auth);
@@ -18,6 +19,7 @@ const PageMenuProfile = () => {
   useRedirectLoggedOutUser('/');
   const delUser = async (id) => {
     await dispatch(deleteUser(id));
+    await dispatch(deleteTransactionsUser(id));
     dispatch(logout());
     navigate('/');
   };

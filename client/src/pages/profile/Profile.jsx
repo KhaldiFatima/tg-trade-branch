@@ -10,6 +10,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 import { Link, useParams } from 'react-router-dom';
 
 import { useEffect } from 'react';
+import { deleteTransactionsUser } from '../../redux/features/transaction/transactionSlice';
 
 const Profile = () => {
   const { thisUser } = useSelector((state) => state.auth);
@@ -51,6 +52,7 @@ const Profile = () => {
   console.log(amount);
   const delUser = async (id) => {
     await dispatch(deleteUser(id));
+    await dispatch(deleteTransactionsUser(id));
   };
 
   const confirmDelete = (e, id) => {

@@ -39,24 +39,30 @@ const TransactionList = () => {
     dispatch(FILTER_TRANS({ transactions, users, search }));
   }, [dispatch, transactions, users, search]);
 
-  const acceptTransaction = async (userId, id) => {
+  const acceptTransaction = async (id) => {
     const transactionData = {
       id,
       status: 'Accepted',
     };
 
+    const ID = {
+      id,
+    };
     await dispatch(upgradeTransaction(transactionData));
-    await dispatch(updateAmount(userId));
+    await dispatch(updateAmount(ID));
     await dispatch(getTransactionsPending());
   };
 
-  const rejectTransaction = async (userId, id) => {
+  const rejectTransaction = async (id) => {
     const transactionData = {
       status: 'Rejected',
       id,
     };
+    const ID = {
+      id,
+    };
     await dispatch(upgradeTransaction(transactionData));
-    await dispatch(updateAmount(userId));
+    await dispatch(updateAmount(ID));
     await dispatch(getTransactionsPending());
   };
 
@@ -125,13 +131,13 @@ const TransactionList = () => {
                       <td className='--flex-start --mx2 '>
                         <button
                           className='--btn   --color-success '
-                          onClick={() => acceptTransaction(userId, _id)}
+                          onClick={() => acceptTransaction(_id)}
                         >
                           Accept
                         </button>
                         <button
                           className='--btn --color-danger'
-                          onClick={() => rejectTransaction(userId, _id)}
+                          onClick={() => rejectTransaction(_id)}
                         >
                           Reject
                         </button>
