@@ -64,9 +64,8 @@ const Login = () => {
       dispatch(RESET());
     }
     if (isError && twoFactor) {
-      navigate(`/Login-with-code/${email}`);
-      console.log(email);
       dispatch(sendLoginCode(email));
+      navigate(`/login-with-code/${email}`);
     }
   }, [isSuccess, isLoggedIn, navigate, dispatch, isError, twoFactor, email]);
 
@@ -111,7 +110,7 @@ const Login = () => {
                 Forgot Password
               </Link>
               <br />
-              <button type='submit' className='--btn --btn-logo --btn-block'>
+              <button className='--btn --btn-logo --btn-block'>
                 <ShowSpinnerOrText
                   text={'Login'}
                   icon={<BiLogInCircle className={styles.btn} />}

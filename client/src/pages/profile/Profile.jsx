@@ -32,6 +32,7 @@ const Profile = () => {
     avatar: thisUser?.avatar || '',
     role: thisUser?.role || '',
     isVerified: thisUser?.isVerified || false,
+    amount: thisUser?.amount || 0,
   };
 
   const {
@@ -44,8 +45,10 @@ const Profile = () => {
     avatar,
     role,
     isVerified,
+    amount,
   } = profile;
 
+  console.log(amount);
   const delUser = async (id) => {
     await dispatch(deleteUser(id));
   };
@@ -82,11 +85,11 @@ const Profile = () => {
               </p>
 
               <p className='money --mt'>
-                100 <strong>$</strong>
+                {amount} <strong>$</strong>
               </p>
             </>
           </div>
-          {/* onSubmit={delUser(id)} */}
+
           <form className='--mt'>
             <div className='--flex-between '>
               <div className='--mr2'>

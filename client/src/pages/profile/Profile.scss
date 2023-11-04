@@ -39,7 +39,7 @@
     }
     &:hover {
       & .fileUpload {
-        cursor: pointer;
+        cursor: no-drop;
       }
     }
   }

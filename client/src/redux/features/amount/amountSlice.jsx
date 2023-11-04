@@ -82,7 +82,6 @@ const amountSlice = createSlice({
         state.isSuccess = true;
         state.amount = action.payload;
         toast.success('User amount updated');
-        console.log(action.payload);
       })
       .addCase(updateAmount.rejected, (state, action) => {
         state.isLoadingA = false;

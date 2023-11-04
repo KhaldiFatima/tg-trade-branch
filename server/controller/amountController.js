@@ -19,38 +19,42 @@ const getAmount = asyncHandler(async (req, res) => {
 
 const updateAmount = asyncHandler(async (req, res) => {
   const { id } = req.body;
-  const totalAmountUser = await Amount.findOne({ userId: req.user._id });
-  console.log(id);
-  const transaction = await Transaction.findById(id);
-  if (!totalAmountUser) {
-    res.status(404);
-    throw new Error('Account funds Not Found. ');
-  }
-
-  if (!transaction) {
-    res.status(404);
-    throw new Error('Transaction Not Found. ');
-  }
-
-  const { amountTrans, type, status } = transaction;
-
-  if (status === 'Accepted') {
-    if (type === 'deposit') {
-      totalAmountUser.amount += amountTrans;
-    } else if (type === 'withdrawal') {
-      totalAmountUser.amount -= amountTrans;
+  try {
+    const transaction = await Transaction.findById(id);
+    // const { type, status, userId } = transaction;
+    console.log(transaction);
+    const totalAmountUser = await Amount.findOne({ userId: userId });
+    console.log(id);
+    console.log(totalAmountUser);
+    if (!transaction) {
+      res.status(404);
+      throw new Error('Transaction Not Found. ');
     }
+    if (!totalAmountUser) {
+      res.status(404);
+      throw new Error('Account funds Not Found. ');
+    }
+
+    if (status === 'Accepted') {
+      if (type === 'deposit') {
+        totalAmountUser.amount += amountTrans;
+      } else if (type === 'withdrawal') {
+        totalAmountUser.amount -= amountTrans;
+      }
+    }
+
+    console.log('updateAmount' + totalAmountUser);
+
+    const updateAmount = await totalAmountUser.save();
+
+    // const { userId, amount } = updateAmount;
+    res.status(200).json({
+      userId: updateAmount.userId,
+      amount: updateAmount.amount,
+    });
+  } catch (error) {
+    console.log(error.message);
   }
-
-  console.log('updateAmount' + totalAmountUser);
-
-  const updateAmount = await totalAmountUser.save();
-
-  const { userId, amount } = updateAmount;
-  res.status(200).json({
-    userId,
-    amount,
-  });
 });
 
 // const getAmount=asyncHandler(async(req,res)=>{res.send("successfully")})

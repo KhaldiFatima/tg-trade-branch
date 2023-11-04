@@ -574,6 +574,7 @@ const sendLoginCode = asyncHandler(async (req, res) => {
 
   const loginCode = userToken.loginToken;
   const decryptedLoginCode = cryptr.decrypt(loginCode);
+  console.log(decryptedLoginCode);
 
   const subject = 'Login Access Code  - TG Trade';
   const send_to = email;
@@ -674,6 +675,7 @@ const loginWithCode = asyncHandler(async (req, res) => {
 
 const getUserWithId = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
+  const amountUSer = await Amount.findOne({ userId: user.id });
   if (user) {
     const {
       _id,
@@ -686,7 +688,7 @@ const getUserWithId = asyncHandler(async (req, res) => {
       role,
       isVerified,
     } = user;
-
+    const { amount } = amountUSer;
     res.status(200).json({
       _id,
       firstName,
@@ -696,6 +698,7 @@ const getUserWithId = asyncHandler(async (req, res) => {
       email,
       avatar,
       role,
+      amount,
       isVerified,
     });
   } else {

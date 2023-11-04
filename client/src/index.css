@@ -679,6 +679,9 @@ a:hover {
 .cursor {
   cursor: pointer;
 }
+.no-drop {
+  cursor: no-drop;
+}
 
 .--td-red {
   color: red;

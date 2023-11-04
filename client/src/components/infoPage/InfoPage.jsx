@@ -35,7 +35,7 @@ const InfoPage = ({ title = '' }) => {
       amountTrans: amount,
       paymentMethod,
     };
-    console.log(transactionData);
+    console.log(amount);
     await dispatch(requestDepositFunds(transactionData));
     await dispatch(RESET_T());
   };
@@ -60,7 +60,6 @@ const InfoPage = ({ title = '' }) => {
     await dispatch(RESET_T());
   };
 
-  console.log(paymentMethod);
   return (
     <div className='info --flex-between'>
       <div className='method'>

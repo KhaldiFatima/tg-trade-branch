@@ -10,8 +10,6 @@ const filterTSlice = createSlice({
   reducers: {
     FILTER_TRANS(state, action) {
       const { transactions, search } = action.payload;
-      console.log(transactions);
-
       const tempTrans = transactions.filter(
         (transaction) =>
           transaction.type.toLowerCase().includes(search.toLowerCase()) ||
@@ -28,8 +26,6 @@ const filterTSlice = createSlice({
       // );
 
       state.filteredTrans = tempTrans;
-
-      console.log(state.filteredTrans);
     },
   },
 });

@@ -89,7 +89,7 @@ const Register = () => {
 
   useEffect(() => {
     if (isSuccess && sendCode) {
-      navigate(`/Login-with-code/${email}`);
+      navigate(`/login-with-code/${email}`);
       dispatch(sendLoginCode(email));
     }
   }, [sendCode, isSuccess, email, navigate, dispatch]);

@@ -1,17 +1,18 @@
 import './Home.scss';
 import '../../dashboard/dashboardList/DashboardList.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import {
   CALC_PENDING_USER,
   getUSerTransactions,
 } from '../../redux/features/transaction/transactionSlice';
-import ReactPaginate from 'react-paginate';
+
 import moment from 'moment';
 import { NavLink } from 'react-router-dom';
 import InfoBox from '../../dashboard/componentsDashboard/infoBox/InfoBox';
 import { GiTakeMyMoney } from 'react-icons/gi';
 import { TbProgressBolt } from 'react-icons/tb';
+import noData from '../../assets/New folder/noData.png';
 
 const icon1 = <GiTakeMyMoney size={40} color='#fff' />;
 const icon2 = <TbProgressBolt size={40} color='#fff' />;
@@ -74,7 +75,10 @@ const Home = () => {
           </div>
           <div className='table'>
             {!isLoading_T && transactionUser.length === 0 ? (
-              <p>No transaction found ... </p>
+              <div className='--center-all '>
+                <img src={noData} alt='No transaction found...' />
+                <p>No transaction found ... </p>
+              </div>
             ) : (
               <table>
                 <thead>

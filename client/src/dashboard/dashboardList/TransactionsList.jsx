@@ -39,6 +39,27 @@ const TransactionList = () => {
     dispatch(FILTER_TRANS({ transactions, users, search }));
   }, [dispatch, transactions, users, search]);
 
+  const acceptTransaction = async (userId, id) => {
+    const transactionData = {
+      id,
+      status: 'Accepted',
+    };
+
+    await dispatch(upgradeTransaction(transactionData));
+    await dispatch(updateAmount(userId));
+    await dispatch(getTransactionsPending());
+  };
+
+  const rejectTransaction = async (userId, id) => {
+    const transactionData = {
+      status: 'Rejected',
+      id,
+    };
+    await dispatch(upgradeTransaction(transactionData));
+    await dispatch(updateAmount(userId));
+    await dispatch(getTransactionsPending());
+  };
+
   const [itemOffset, setItemOffset] = useState(0);
   const itemsPerPage = 5;
   const endOffset = itemOffset + itemsPerPage;
@@ -49,30 +70,6 @@ const TransactionList = () => {
     const newOffset = (event.selected * itemsPerPage) % filteredTrans.length;
     setItemOffset(newOffset);
   };
-
-  const acceptTransaction = async (id) => {
-    const transactionData = {
-      status: 'Accepted',
-      id,
-    };
-    const idTrans = {
-      id,
-    };
-    console.log(transactionData);
-    await dispatch(upgradeTransaction(transactionData));
-    await dispatch(updateAmount(idTrans));
-    await dispatch(getTransactionsPending());
-  };
-  const rejectTransaction = async (id) => {
-    const transactionData = {
-      status: 'Rejected',
-      id,
-    };
-    await dispatch(upgradeTransaction(transactionData));
-    await dispatch(updateAmount(id));
-    await dispatch(getTransactionsPending());
-  };
-
   return (
     <div className='user-summary --mt  user-list --mr'>
       {isLoading_T && <Loader />}
@@ -118,6 +115,7 @@ const TransactionList = () => {
                     : (name = '');
                   // const { firstName, lastName } = user;
                   // const name = firstName + ' ' + lastName;
+
                   return (
                     <tr key={_id}>
                       <td>{itemOffset + index + 1}</td>
@@ -127,13 +125,13 @@ const TransactionList = () => {
                       <td className='--flex-start --mx2 '>
                         <button
                           className='--btn   --color-success '
-                          onClick={() => acceptTransaction(_id)}
+                          onClick={() => acceptTransaction(userId, _id)}
                         >
                           Accept
                         </button>
                         <button
                           className='--btn --color-danger'
-                          onClick={() => rejectTransaction(_id)}
+                          onClick={() => rejectTransaction(userId, _id)}
                         >
                           Reject
                         </button>

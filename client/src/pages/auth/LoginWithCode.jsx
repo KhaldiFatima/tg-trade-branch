@@ -16,7 +16,7 @@ import Loader from '../../components/loader/Loader';
 
 const LoginWithCode = () => {
   const [loginCode, setLoginCode] = useState('');
-  const { sendCode, isSuccess, twoFactor, isLoading } = useSelector(
+  const { sendCode, isSuccess, isLoggedIn, twoFactor, isLoading } = useSelector(
     (state) => state.auth
   );
 
@@ -27,7 +27,7 @@ const LoginWithCode = () => {
 
   const sendUserLoginCode = async () => {
     await dispatch(sendLoginCode(email));
-    await dispatch(RESET());
+    // await dispatch(RESET());
   };
 
   const loginUser = async (e) => {
@@ -48,10 +48,11 @@ const LoginWithCode = () => {
   };
 
   useEffect(() => {
-    if (!sendCode && isSuccess) {
+    if (!sendCode && isSuccess && isLoggedIn) {
       navigate('/home');
+      dispatch(RESET());
     }
-  }, [isSuccess, sendCode, navigate, dispatch]);
+  }, [isSuccess, sendCode, navigate, isLoggedIn, dispatch]);
 
   return (
     <div className={`container  ${styles.auth}`}>
@@ -92,7 +93,7 @@ const LoginWithCode = () => {
                   <Link
                     className='--fw-bold'
                     to='/login'
-                    // onClick={() => dispatch(RESET())}
+                    onClick={() => dispatch(RESET())}
                   >
                     Go Back
                   </Link>
@@ -106,9 +107,7 @@ const LoginWithCode = () => {
               )}
               <p
                 className=' --color-primary --fw-bold cursor'
-                onClick={() => {
-                  sendUserLoginCode();
-                }}
+                onClick={sendUserLoginCode}
               >
                 Resent Code
               </p>
