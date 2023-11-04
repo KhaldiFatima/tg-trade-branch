@@ -40,4 +40,8 @@
   .info-box {
     max-width: 100%;
   }
+  .info {
+    flex-direction: column;
+    height: 100%;
+  }
 }

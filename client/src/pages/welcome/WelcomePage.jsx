@@ -7,8 +7,11 @@ import {
   ShowOnLogout,
 } from '../../components/helpper/hiddenLinks';
 import { IsStopCreateAccount } from '../../components/helpper/settingsFunction';
+import { useSelector } from 'react-redux';
 
 function WelcomePage() {
+  const { settings } = useSelector((state) => state.settings);
+
   return (
     <>
       <section className='container hero  '>
@@ -47,9 +50,11 @@ function WelcomePage() {
           <ShowOnLogout>
             <div className='hero-buttons --flex-start'>
               <IsStopCreateAccount>
-                <button className='--btn --btn-danger'>
-                  <Link to='/register'>Register</Link>
-                </button>
+                {!settings.isCreate && (
+                  <button className='--btn --btn-danger'>
+                    <Link to='/register'>Register</Link>
+                  </button>
+                )}
               </IsStopCreateAccount>
               <button className='--btn --btn-primary'>
                 <Link to='/login'>Login</Link>

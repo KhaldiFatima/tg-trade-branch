@@ -59,6 +59,9 @@
       }
     }
   }
+  img {
+    width: 15%;
+  }
 }
 
 .sort {
@@ -77,4 +80,18 @@
     border-bottom: 1px solid rgba(255, 68, 0, 0.473);
     outline: none;
   }
+}
+
+.btn_show {
+  color: #030b6b;
+  background: #fff;
+  border-bottom: #030b6b 1px solid;
+  /* box-shadow: 0 0 5px 0 #030b6b; */
+  border-radius: 12px;
+}
+.btn_show:hover {
+  border: #030b6b 1px solid;
+  box-shadow: 0 0 5px 0 #030b6b;
+  border-radius: 12px;
+  transform: translateY(-1px);
 }

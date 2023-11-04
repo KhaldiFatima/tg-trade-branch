@@ -2,10 +2,7 @@ import { useEffect, useState } from 'react';
 import './DashboardList.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import Search from '../componentsDashboard/search/Search';
-import {
-  getTransactionsPending,
-  upgradeTransaction,
-} from '../../redux/features/transaction/transactionSlice';
+import { getTransactionsCompleted } from '../../redux/features/transaction/transactionSlice';
 import { shortenText } from '../../components/userName/UserName';
 import { getUsers } from '../../redux/features/auth/authSlice';
 import Loader from '../../components/loader/Loader';
@@ -15,14 +12,12 @@ import {
   selectTransactions,
 } from '../../redux/features/transaction/filterTSlice';
 import { NavLink } from 'react-router-dom';
-import { updateAmount } from '../../redux/features/amount/amountSlice';
-import noData from '../../assets/New folder/noData.png';
 
-const TransactionList = () => {
+const TransactionCompleted = () => {
   const [search, setSearch] = useState('');
   const dispatch = useDispatch();
 
-  const { isLoading_T, transactionsPending } = useSelector(
+  const { isLoading_T, transactionsCompleted } = useSelector(
     (state) => state.transaction
   );
 
@@ -31,10 +26,10 @@ const TransactionList = () => {
 
   useEffect(() => {
     dispatch(getUsers());
-    dispatch(getTransactionsPending());
+    dispatch(getTransactionsCompleted());
   }, [dispatch]);
 
-  const transactions = transactionsPending;
+  const transactions = transactionsCompleted;
   useEffect(() => {
     dispatch(FILTER_TRANS({ transactions, users, search }));
   }, [dispatch, transactions, users, search]);
@@ -50,36 +45,13 @@ const TransactionList = () => {
     setItemOffset(newOffset);
   };
 
-  const acceptTransaction = async (id) => {
-    const transactionData = {
-      status: 'Accepted',
-      id,
-    };
-    const idTrans = {
-      id,
-    };
-    console.log(transactionData);
-    await dispatch(upgradeTransaction(transactionData));
-    await dispatch(updateAmount(idTrans));
-    await dispatch(getTransactionsPending());
-  };
-  const rejectTransaction = async (id) => {
-    const transactionData = {
-      status: 'Rejected',
-      id,
-    };
-    await dispatch(upgradeTransaction(transactionData));
-    await dispatch(updateAmount(id));
-    await dispatch(getTransactionsPending());
-  };
-
   return (
     <div className='user-summary --mt  user-list --mr'>
       {isLoading_T && <Loader />}
       <div className='table'>
         <div className='--flex-between'>
           <span>
-            <h3>Transactions</h3>
+            <h3>Transactions Completed</h3>
           </span>
           <span>
             <Search
@@ -89,11 +61,8 @@ const TransactionList = () => {
           </span>
         </div>
         <div className='table'>
-          {!isLoading_T && transactionsPending.length === 0 ? (
-            <div className='--center-all '>
-              <img src={noData} alt='No transaction found...' />
-              <p>No transaction found ... </p>
-            </div>
+          {!isLoading_T && transactionsCompleted.length === 0 ? (
+            <p>No transaction found ... </p>
           ) : (
             <table>
               <thead>
@@ -107,8 +76,8 @@ const TransactionList = () => {
               </thead>
               <tbody>
                 {currentItems.map((transaction, index) => {
-                  const { _id, userId, type, amountTrans } = transaction;
-
+                  const { _id, userId, type, amountTrans, status } =
+                    transaction;
                   const user = users.find((user) => {
                     return user._id === userId;
                   });
@@ -124,19 +93,16 @@ const TransactionList = () => {
                       <td>{shortenText(name, 15)}</td>
                       <td>{amountTrans} $</td>
                       <td>{type}</td>
-                      <td className='--flex-start --mx2 '>
-                        <button
-                          className='--btn   --color-success '
-                          onClick={() => acceptTransaction(_id)}
+                      <td>
+                        <p
+                          className={
+                            (status === 'Accepted' && '--td-green') ||
+                            (status === 'Rejected' && '--td-red') ||
+                            '--p-td'
+                          }
                         >
-                          Accept
-                        </button>
-                        <button
-                          className='--btn --color-danger'
-                          onClick={() => rejectTransaction(_id)}
-                        >
-                          Reject
-                        </button>
+                          {status}
+                        </p>
                       </td>
                     </tr>
                   );
@@ -145,7 +111,7 @@ const TransactionList = () => {
             </table>
           )}
         </div>
-        {itemsPerPage >= transactionsPending.length ? null : (
+        {itemsPerPage >= transactionsCompleted.length ? null : (
           <ReactPaginate
             breakLabel='...'
             nextLabel='>'
@@ -162,17 +128,12 @@ const TransactionList = () => {
           />
         )}
 
-        <div className='--flex-end  --fw-bold'>
-          <NavLink
-            to='/dashboard/transactions/completed'
-            className={'btn_show --p'}
-          >
-            Show Completed Transactions
-          </NavLink>
+        <div className='--flex-end'>
+          <NavLink to='/profile'></NavLink>
         </div>
       </div>
     </div>
   );
 };
 
-export default TransactionList;
+export default TransactionCompleted;

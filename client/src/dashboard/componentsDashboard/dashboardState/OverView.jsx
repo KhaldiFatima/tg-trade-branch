@@ -3,11 +3,14 @@ import TransactionsStats from './TransactinsState';
 
 const OverView = () => {
   return (
-    <div className='user-summary'>
-      <h3>Overview</h3>
-      <UsersStats />
-      <TransactionsStats />
-    </div>
+    <>
+      <div className='user-summary --mb2'>
+        <h3>Overview</h3>
+        <UsersStats />
+        <br />
+        <TransactionsStats />
+      </div>
+    </>
   );
 };
 

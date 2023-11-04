@@ -16,6 +16,8 @@ import { register, sendLoginCode } from '../../redux/features/auth/authSlice';
 
 import ShowSpinnerOrText from '../../components/helpper/ShowSpinnerOrText';
 import useRedirectLoggedInUser from '../../customHook/useRedirectLoggedInUser';
+import NotFound from '../notFound/NotFound';
+
 const initialData = {
   firstName: '',
   middleName: '',
@@ -38,6 +40,7 @@ const Register = () => {
   const dispatch = useDispatch();
 
   const { isSuccess, sendCode } = useSelector((state) => state.auth);
+  const { settings } = useSelector((state) => state.settings);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -93,96 +96,100 @@ const Register = () => {
 
   return (
     <div className={`container  ${styles.auth}`}>
-      <Card>
-        <div className={`${styles.form}`}>
-          <div className={styles.cardForm}>
-            <Logo />
-            <br />
-            <form onSubmit={registerUser}>
-              <div className='--flex-between '>
-                <div className='--mr'>
+      {settings.isCreate ? (
+        <NotFound />
+      ) : (
+        <Card>
+          <div className={`${styles.form}`}>
+            <div className={styles.cardForm}>
+              <Logo />
+              <br />
+              <form onSubmit={registerUser}>
+                <div className='--flex-between '>
+                  <div className='--mr'>
+                    <input
+                      type='text'
+                      placeholder='First Name'
+                      name='firstName'
+                      value={firstName}
+                      onChange={handleInputChange}
+                      // required
+                    />
+                  </div>
                   <input
                     type='text'
-                    placeholder='First Name'
-                    name='firstName'
-                    value={firstName}
+                    placeholder='Middle Name'
+                    name='middleName'
+                    value={middleName}
                     onChange={handleInputChange}
-                    // required
                   />
                 </div>
                 <input
                   type='text'
-                  placeholder='Middle Name'
-                  name='middleName'
-                  value={middleName}
+                  placeholder='Last Name'
+                  name='lastName'
+                  value={lastName}
                   onChange={handleInputChange}
+                  // required
                 />
-              </div>
-              <input
-                type='text'
-                placeholder='Last Name'
-                name='lastName'
-                value={lastName}
-                onChange={handleInputChange}
-                // required
-              />
-              <input
-                // type='email'
-                type='text'
-                placeholder='Email'
-                name='email'
-                value={email}
-                onChange={handleInputChange}
-                // required
-              />
-
-              <PhoneNumberInput setPhoneNumber={setPhoneNumber} />
-
-              <PasswordInput
-                placeholder='Password'
-                name='password'
-                value={password}
-                onChange={handleInputChange}
-                // onPaste={}
-              />
-              <PasswordInput
-                placeholder='Confirm Password'
-                name='password2'
-                value={password2}
-                onChange={handleInputChange}
-                onPaste={(e) => {
-                  e.preventDefault();
-                  toast.error('Cannot paste into input field');
-                  return false;
-                }}
-              />
-              {isShow ? <PassStrength password={password} /> : null}
-
-              <br />
-              <button type='submit' className='--btn --btn-logo --btn-block '>
-                <ShowSpinnerOrText
-                  text={'Register'}
-                  icon={<GoPersonAdd size={20} className={styles.btn} />}
+                <input
+                  // type='email'
+                  type='text'
+                  placeholder='Email'
+                  name='email'
+                  value={email}
+                  onChange={handleInputChange}
+                  // required
                 />
-              </button>
-            </form>
 
-            <span className={styles.register}>
-              <p>Already have an account? &nbsp;</p>
-              <Link to='/login'>Login</Link>
-            </span>
+                <PhoneNumberInput setPhoneNumber={setPhoneNumber} />
+
+                <PasswordInput
+                  placeholder='Password'
+                  name='password'
+                  value={password}
+                  onChange={handleInputChange}
+                  // onPaste={}
+                />
+                <PasswordInput
+                  placeholder='Confirm Password'
+                  name='password2'
+                  value={password2}
+                  onChange={handleInputChange}
+                  onPaste={(e) => {
+                    e.preventDefault();
+                    toast.error('Cannot paste into input field');
+                    return false;
+                  }}
+                />
+                {isShow ? <PassStrength password={password} /> : null}
+
+                <br />
+                <button type='submit' className='--btn --btn-logo --btn-block '>
+                  <ShowSpinnerOrText
+                    text={'Register'}
+                    icon={<GoPersonAdd size={20} className={styles.btn} />}
+                  />
+                </button>
+              </form>
+
+              <span className={styles.register}>
+                <p>Already have an account? &nbsp;</p>
+                <Link to='/login'>Login</Link>
+              </span>
+            </div>
+            <div className={`${styles.cardImg} `}>
+              <img src={RegisterImg} alt='Register Image' />
+              <p className='--flex-end '>
+                <Link to='/'>
+                  Go Back
+                  <TbArrowBackUpDouble size={25} color='#ee7483' />
+                </Link>
+              </p>
+            </div>
           </div>
-          <div className={`${styles.cardImg} `}>
-            <img src={RegisterImg} alt='Register Image' />
-            <p className='--flex-end '>
-              <Link to='/'>
-                Go Back
-                <TbArrowBackUpDouble size={25} color='#ee7483' />
-              </Link>
-            </p>
-          </div>
-        </div>
-      </Card>
+        </Card>
+      )}
     </div>
   );
 };

@@ -85,7 +85,7 @@ const upgradeTransaction = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error('Transaction Not Found. ');
   }
-  if (transaction.status === 'accept' || transaction.status === 'reject') {
+  if (transaction.status === 'Accepted' || transaction.status === 'Rejected') {
     res.status(404);
     throw new Error('The transaction status has already been updated');
   }
@@ -154,6 +154,12 @@ const updateTransaction = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error('Transaction Not Found. ');
   }
+
+  if (transaction.status !== 'pending') {
+    res.status(404);
+    throw new Error(`You can't edit a transaction that has been.`);
+  }
+
   const { type, amountTrans, paymentMethod } = transaction;
 
   transaction.type = req.body.type || type;
@@ -168,7 +174,57 @@ const updateTransaction = asyncHandler(async (req, res) => {
   });
 });
 
-// const   updateTransaction=asyncHandler(async(req,res)=>{res.send("successfully")})
+const allTransactionsPending = asyncHandler(async (req, res) => {
+  const transactions = await Transaction.find().sort('-createdAt');
+  if (!transactions) {
+    res.status(500);
+    throw new Error('Something went wrong');
+  }
+  const transactionsPending = transactions.filter((transaction) => {
+    return transaction.status === 'pending';
+  });
+
+  res.status(200).json(transactionsPending);
+});
+
+const allTransactionsCompleted = asyncHandler(async (req, res) => {
+  const transactions = await Transaction.find().sort('-createdAt');
+  if (!transactions) {
+    res.status(500);
+    throw new Error('Something went wrong');
+  }
+  const transactionsCompleted = transactions.filter((transaction) => {
+    return transaction.status !== 'pending';
+  });
+
+  res.status(200).json(transactionsCompleted);
+});
+
+const deleteTransactionsUser = asyncHandler(async (req, res) => {
+  const transactions = await Transaction.find({ userId: req.params.id });
+  if (!transactions) {
+    res.status(500);
+    throw new Error('Something went wrong');
+  }
+
+  await Transaction.deleteMany({ userId: req.params.id });
+
+  res.status(200).json({
+    message: 'User transactions were successfully deleted',
+  });
+});
+
+const getTransaction = asyncHandler(async (req, res) => {
+  const transaction = await Transaction.findById(req.params.id);
+  if (!transaction) {
+    res.status(404);
+    throw new Error('Transaction Not Found. ');
+  }
+
+  res.status(200).json(transaction);
+});
+
+// const   deleteTransactionsUser=asyncHandler(async(req,res)=>{res.send("successfully")})
 
 module.exports = {
   requestDepositFunds,
@@ -179,4 +235,8 @@ module.exports = {
   deleteTransaction,
   transactionStatus,
   updateTransaction,
+  allTransactionsPending,
+  allTransactionsCompleted,
+  deleteTransactionsUser,
+  getTransaction,
 };

@@ -18,7 +18,7 @@ const icon2 = <TbProgressBolt size={40} color='#fff' />;
 const Home = () => {
   const dispatch = useDispatch();
 
-  const { isLoading, transactionUser, pendingTransUser } = useSelector(
+  const { isLoading_T, transactionUser, pendingTransUser } = useSelector(
     (state) => state.transaction
   );
   const { amount, isLoadingA } = useSelector((state) => state.amount);
@@ -29,17 +29,6 @@ const Home = () => {
     dispatch(getUSerTransactions());
     dispatch(CALC_PENDING_USER());
   }, [dispatch]);
-
-  const [itemOffset, setItemOffset] = useState(0);
-  const itemsPerPage = 9;
-  const endOffset = itemOffset + itemsPerPage;
-  const currentItems = transactionUser.slice(itemOffset, endOffset);
-  const pageCount = Math.ceil(transactionUser.length / itemsPerPage);
-
-  const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % transactionUser.length;
-    setItemOffset(newOffset);
-  };
 
   return (
     <>
@@ -59,7 +48,7 @@ const Home = () => {
               bgColor='card2'
             />
           </div>
-          <div className='--dir-flex-column --width-50 --m2 --p2  '>
+          <div className='--dir-flex-column --width-50 --m2  '>
             <input
               type='text'
               value={userAmount}
@@ -84,7 +73,7 @@ const Home = () => {
             </span>
           </div>
           <div className='table'>
-            {!isLoading && transactionUser.length === 0 ? (
+            {!isLoading_T && transactionUser.length === 0 ? (
               <p>No transaction found ... </p>
             ) : (
               <table>
@@ -98,16 +87,29 @@ const Home = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {currentItems.map((transaction, index) => {
+                  {transactionUser.map((transaction, index) => {
                     const { _id, type, amountTrans, status, date } =
                       transaction;
+                    if (index >= 9) {
+                      return;
+                    }
                     return (
                       <tr key={_id}>
-                        <td>{itemOffset + index + 1}</td>
+                        <td>{index + 1}</td>
                         <td>{type}</td>
                         <td>{amountTrans} $</td>
                         <td>{moment(date).format('DD MM YYYY hh:mm a')}</td>
-                        <td>{status}</td>
+                        <td>
+                          <p
+                            className={
+                              (status === 'Accepted' && '--td-green') ||
+                              (status === 'Rejected' && '--td-red') ||
+                              '--p-td'
+                            }
+                          >
+                            {status}
+                          </p>
+                        </td>
                       </tr>
                     );
                   })}
@@ -115,22 +117,6 @@ const Home = () => {
               </table>
             )}
           </div>
-          {itemsPerPage >= transactionUser.length ? null : (
-            <ReactPaginate
-              breakLabel='...'
-              nextLabel='>'
-              onPageChange={handlePageClick}
-              pageRangeDisplayed={3}
-              pageCount={pageCount}
-              previousLabel='<'
-              renderOnZeroPageCount={null}
-              containerClassName='pagination'
-              pageLinkClassName='page-num'
-              previousLinkClassName='page-num'
-              nextLinkClassName='page-num'
-              activeLinkClassName='activePage'
-            />
-          )}
         </div>
       </div>
     </>

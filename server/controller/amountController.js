@@ -20,6 +20,7 @@ const getAmount = asyncHandler(async (req, res) => {
 const updateAmount = asyncHandler(async (req, res) => {
   const { id } = req.body;
   const totalAmountUser = await Amount.findOne({ userId: req.user._id });
+  console.log(id);
   const transaction = await Transaction.findById(id);
   if (!totalAmountUser) {
     res.status(404);
@@ -33,7 +34,7 @@ const updateAmount = asyncHandler(async (req, res) => {
 
   const { amountTrans, type, status } = transaction;
 
-  if (status === 'accept') {
+  if (status === 'Accepted') {
     if (type === 'deposit') {
       totalAmountUser.amount += amountTrans;
     } else if (type === 'withdrawal') {

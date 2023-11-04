@@ -23,3 +23,9 @@ input[type='radio'] {
   width: 2.5rem;
   margin-right: 0.5rem;
 }
+
+@media screen and (max-width: 700px) {
+  .method {
+    width: 270px;
+  }
+}

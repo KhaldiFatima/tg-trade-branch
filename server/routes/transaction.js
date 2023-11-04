@@ -8,6 +8,10 @@ const {
   deleteTransaction,
   transactionStatus,
   updateTransaction,
+  allTransactionsPending,
+  allTransactionsCompleted,
+  deleteTransactionsUser,
+  getTransaction,
 } = require('../controller/transactionController');
 const { protect, adminOnly } = require('../middleware/authMiddleware');
 const {
@@ -30,5 +34,25 @@ router.get(
   transactionStatus
 );
 router.patch('/update-transaction/:id', protect, updateTransaction);
+router.get(
+  '/all-transaction-pending',
+  protect,
+  adminOnly,
+  allTransactionsPending
+);
+router.get(
+  '/all-transaction-completed',
+  protect,
+  adminOnly,
+  allTransactionsCompleted
+);
+
+router.delete(
+  '/delete-transaction-user/:id',
+  protect,
+  adminOnly,
+  deleteTransactionsUser
+);
+router.get('/get-transaction/:id', protect, getTransaction);
 
 module.exports = router;

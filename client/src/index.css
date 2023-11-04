@@ -20,6 +20,7 @@
   --color-primary: #007bff;
   --color-success: #28a745;
   --color-danger: orangered;
+  --color-red: #ff0000;
 }
 
 * {
@@ -90,9 +91,17 @@ section {
   justify-content: space-around;
   align-items: center;
 }
-
+.--flex-evenly {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
 .--dir-column {
   flex-direction: column;
+}
+
+.--flex {
+  display: flex;
 }
 
 .--flex-dir-column {
@@ -382,30 +391,6 @@ p {
   /* border-radius: 17px; */
   box-shadow: 0 0 5px 0 #ff000078;
 }
-.--td-red {
-  color: red;
-  background: #fff;
-  border: #ff00002e 1px solid;
-  border-radius: 7px;
-  text-align: center;
-  padding: 3px;
-}
-.--btn-td-green {
-  color: green;
-  background: #fff;
-  border: #00800052 1px solid;
-  border-radius: 7px;
-  text-align: center;
-  padding: 3px;
-}
-.--p-td {
-  color: steelblue;
-  background: #fff;
-  border: #4682b463 1px solid;
-  border-radius: 7px;
-  text-align: center;
-  padding: 3px;
-}
 
 .--btn-secondary {
   color: #fff;
@@ -693,4 +678,29 @@ a:hover {
 
 .cursor {
   cursor: pointer;
+}
+
+.--td-red {
+  color: red;
+  background: #fff;
+  border: #ff00002e 1px solid;
+  border-radius: 7px;
+  text-align: center;
+  padding: 3px;
+}
+.--td-green {
+  color: green;
+  background: #fff;
+  border: #00800052 1px solid;
+  border-radius: 7px;
+  text-align: center;
+  padding: 3px;
+}
+.--p-td {
+  color: steelblue;
+  background: #fff;
+  border: #4682b463 1px solid;
+  border-radius: 7px;
+  text-align: center;
+  padding: 3px;
 }

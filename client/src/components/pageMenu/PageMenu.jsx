@@ -20,7 +20,7 @@ const PageMenu = () => {
           </li>
 
           <li>
-            <NavLink to='/transaction'>Transaction</NavLink>
+            <NavLink to='/transactions'>Transaction</NavLink>
           </li>
         </ul>
       </nav>

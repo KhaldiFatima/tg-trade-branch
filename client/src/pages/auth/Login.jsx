@@ -31,6 +31,7 @@ const Login = () => {
   const { isLoggedIn, isSuccess, isError, twoFactor } = useSelector(
     (state) => state.auth
   );
+  const { settings } = useSelector((state) => state.settings);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -120,7 +121,7 @@ const Login = () => {
 
             <span className={styles.register}>
               <p>Don&apos;t have an account? &nbsp;</p>
-              <Link to='/register'>Register</Link>
+              {!settings.isCreate && <Link to='/register'>Register</Link>}
             </span>
           </div>
         </div>

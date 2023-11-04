@@ -1,22 +1,60 @@
 import ReactPaginate from 'react-paginate';
 import moment from 'moment';
 import { useEffect, useState } from 'react';
-import { getUSerTransactions } from '../../redux/features/transaction/transactionSlice';
+import {
+  deleteTransaction,
+  getUSerTransactions,
+} from '../../redux/features/transaction/transactionSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { FaTrashAlt } from 'react-icons/fa';
 import { MdUpdate } from 'react-icons/md';
 import { confirmAlert } from 'react-confirm-alert';
+import { useNavigate } from 'react-router-dom';
+import noData from '../../assets/New folder/noData.png';
+import { toast } from 'react-toastify';
 
 const Transaction = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const { isLoading, transactionUser } = useSelector(
+  const { isLoading_T, transactionUser } = useSelector(
     (state) => state.transaction
   );
+  const { settings } = useSelector((state) => state.settings);
+  const { isAllowC, isAllowM } = settings;
 
   useEffect(() => {
     dispatch(getUSerTransactions());
   }, [dispatch]);
+
+  const showTransaction = (id, status) => {
+    if (status !== 'pending') {
+      toast.error("You can't edit a transaction that has been.");
+    } else {
+      navigate(`transaction/${id}`);
+    }
+  };
+
+  const delTransaction = async (id) => {
+    await dispatch(deleteTransaction(id));
+    await dispatch(getUSerTransactions());
+  };
+
+  const confirmDelete = (id) => {
+    confirmAlert({
+      title: 'Delete This Transaction',
+      message: 'Are you sure to do delete this transaction ?',
+      buttons: [
+        {
+          label: 'Delete',
+          onClick: () => delTransaction(id),
+        },
+        {
+          label: 'Cancel',
+        },
+      ],
+    });
+  };
 
   const [itemOffset, setItemOffset] = useState(0);
   const itemsPerPage = 9;
@@ -27,27 +65,6 @@ const Transaction = () => {
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % transactionUser.length;
     setItemOffset(newOffset);
-  };
-
-  const delUser = async (id) => {
-    id;
-    // await dispatch(deleteTransaction(id));
-  };
-
-  const confirmDelete = (id) => {
-    confirmAlert({
-      title: 'Delete This User',
-      message: 'Are you sure to do delete this user?',
-      buttons: [
-        {
-          label: 'Delete',
-          onClick: () => delUser(id),
-        },
-        {
-          label: 'Cancel',
-        },
-      ],
-    });
   };
 
   return (
@@ -61,8 +78,11 @@ const Transaction = () => {
             </span>
           </div>
           <div className='table'>
-            {!isLoading && transactionUser.length === 0 ? (
-              <p>No transaction found ... </p>
+            {!isLoading_T && transactionUser.length === 0 ? (
+              <div className='--center-all '>
+                <img src={noData} alt='No transaction found...' />
+                <p>No transaction found ... </p>
+              </div>
             ) : (
               <table>
                 <thead>
@@ -73,7 +93,7 @@ const Transaction = () => {
                     <th>Date</th>
                     <th>Payment Method</th>
                     <th>Status</th>
-                    <th>Transaction</th>
+                    {isAllowC || isAllowM ? <th>Transaction</th> : null}
                   </tr>
                 </thead>
                 <tbody>
@@ -94,21 +114,34 @@ const Transaction = () => {
                         <td>{moment(date).format('DD MM YYYY hh:mm a')}</td>
                         <td>{paymentMethod}</td>
                         <td>
-                          <p className='--p-td '> {status}</p>
+                          <p
+                            className={
+                              (status === 'Accepted' && '--td-green') ||
+                              (status === 'Rejected' && '--td-red') ||
+                              '--p-td'
+                            }
+                          >
+                            {status}
+                          </p>
                         </td>
-
-                        <td className='--flex-around'>
-                          <FaTrashAlt
-                            size={20}
-                            color='red'
-                            onClick={() => confirmDelete(_id)}
-                          />
-                          <MdUpdate
-                            size={25}
-                            color='steelblue'
-                            // onClick={() => showProfile(_id)}
-                          />
-                        </td>
+                        {isAllowC || isAllowM ? (
+                          <td className='--flex-around'>
+                            {isAllowC && (
+                              <FaTrashAlt
+                                size={20}
+                                color='red'
+                                onClick={() => confirmDelete(_id)}
+                              />
+                            )}
+                            {isAllowM && (
+                              <MdUpdate
+                                size={25}
+                                color='steelblue'
+                                onClick={() => showTransaction(_id, status)}
+                              />
+                            )}
+                          </td>
+                        ) : null}
                       </tr>
                     );
                   })}

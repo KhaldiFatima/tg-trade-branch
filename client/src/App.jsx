@@ -36,6 +36,9 @@ import Dashboard from './dashboard/home/DashboardOverViw';
 import Profile from './pages/profile/Profile';
 import Loader, { LoaderImage } from './components/loader/Loader';
 import { getAmount } from './redux/features/amount/amountSlice';
+import TransactionCompleted from './dashboard/dashboardList/TransactionCompleted';
+import EditTransaction from './pages/transactionHistory/EditTransaction';
+import { getSettings } from './redux/features/settings/settingsSlice';
 
 axios.defaults.withCredentials = true;
 
@@ -46,7 +49,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getLoginStatus());
-
+    dispatch(getSettings());
     if (isLoggedIn && user === null) {
       dispatch(getUser());
     }
@@ -110,10 +113,18 @@ function App() {
           }
         ></Route>
         <Route
-          path='/transaction'
+          path='/transactions'
           element={
             <LayoutHome>
               <Transaction />
+            </LayoutHome>
+          }
+        ></Route>
+        <Route
+          path='/transactions/transaction/:id'
+          element={
+            <LayoutHome>
+              <EditTransaction />
             </LayoutHome>
           }
         ></Route>
@@ -170,10 +181,18 @@ function App() {
           }
         ></Route>
         <Route
-          path='/dashboard/transaction'
+          path='/dashboard/transactions'
           element={
             <LayoutDashboard>
               <TransactionUsers />
+            </LayoutDashboard>
+          }
+        ></Route>
+        <Route
+          path='/dashboard/transactions/completed'
+          element={
+            <LayoutDashboard>
+              <TransactionCompleted />
             </LayoutDashboard>
           }
         ></Route>

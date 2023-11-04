@@ -19,6 +19,7 @@ import {
   selectUsers,
 } from '../../redux/features/auth/filterSlice';
 import ReactPaginate from 'react-paginate';
+import { deleteTransactionsUser } from '../../redux/features/transaction/transactionSlice';
 
 const UsersList = () => {
   const dispatch = useDispatch();
@@ -34,6 +35,8 @@ const UsersList = () => {
 
   const delUser = async (id) => {
     await dispatch(deleteUser(id));
+    await dispatch(deleteTransactionsUser(id));
+
     dispatch(getUsers());
   };
 

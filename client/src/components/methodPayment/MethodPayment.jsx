@@ -3,32 +3,55 @@ import payeerImg from '../../assets/New folder/payeer.png';
 import perfectMoneyImg from '../../assets/New folder//PerfectMoney.svg-.png';
 
 import './Method.scss';
-const MethodPayment = () => {
+const MethodPayment = ({ paymentMethod, setPaymentMethod }) => {
+  const isMethodPaypal = paymentMethod === 'paypal';
+  const isMethodPayeer = paymentMethod === 'payeer';
+  const isMethodPerfacetMoney = paymentMethod === 'perfectMoney';
+
   return (
     <div className='--my2'>
-      <div className='--flex-around --mb2'>
-        <label htmlFor='payeer'>
-          &nbsp;&nbsp; <img src={payeerImg}></img>
-        </label>
-        <input name='payment_method' type='radio' id='payeer' value='payeer' />
-      </div>
-      <div className='--flex-around --mb2'>
-        <label htmlFor='paypal'>
-          &nbsp;&nbsp;
-          <img src={paypalImg}></img>
-        </label>
-        <input name='payment_method' type='radio' id='paypal' value='paypal' />
-      </div>
-      <div className='--flex-around --mb2'>
-        <label htmlFor='perfectMoney'>
-          &nbsp;&nbsp; <img src={perfectMoneyImg}></img>
-        </label>
-        <input
-          name='payment_method'
-          type='radio'
-          id='perfectMoney'
-          value='perfectMoney'
-        />
+      <div className='--my2'>
+        <div className='--flex-around --mb2'>
+          <label htmlFor='payeer'>
+            &nbsp;&nbsp; <img src={payeerImg}></img>
+          </label>
+          <input
+            name='payment_method'
+            type='radio'
+            id='payeer'
+            value={paymentMethod}
+            onChange={() => setPaymentMethod('payeer')}
+            checked={isMethodPayeer}
+          />
+        </div>
+        <div className='--flex-around --mb2'>
+          <label htmlFor='paypal'>
+            &nbsp;&nbsp;
+            <img src={paypalImg}></img>
+          </label>
+          <input
+            name='payment_method'
+            type='radio'
+            id='paypal'
+            // value='paypal'
+            value={paymentMethod}
+            onChange={() => setPaymentMethod('paypal')}
+            checked={isMethodPaypal}
+          />
+        </div>
+        <div className='--flex-around --mb2'>
+          <label htmlFor='perfectMoney'>
+            &nbsp;&nbsp; <img src={perfectMoneyImg}></img>
+          </label>
+          <input
+            name='payment_method'
+            type='radio'
+            id='perfectMoney'
+            value={paymentMethod}
+            onChange={() => setPaymentMethod('perfectMoney')}
+            checked={isMethodPerfacetMoney}
+          />
+        </div>
       </div>
     </div>
   );

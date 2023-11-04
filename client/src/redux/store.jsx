@@ -5,6 +5,7 @@ import filterReducer from './features/auth/filterSlice';
 import transactionReducer from './features/transaction/transactionSlice';
 import filterTransactionsReducer from './features/transaction/filterTSlice';
 import amountReducer from './features/amount/amountSlice';
+import settingsReducer from './features/settings/settingsSlice';
 
 export const store = configureStore({
   reducer: {
@@ -14,5 +15,6 @@ export const store = configureStore({
     transaction: transactionReducer,
     filterTrans: filterTransactionsReducer,
     amount: amountReducer,
+    settings: settingsReducer,
   },
 });

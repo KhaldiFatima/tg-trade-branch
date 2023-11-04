@@ -32,7 +32,7 @@ const PageMenuDashboard = () => {
         <li id='transaction'>
           <NavLink
             className={`${activeLink} --flex-start`}
-            to='/dashboard/transaction'
+            to='/dashboard/transactions'
           >
             <MdOutlineAssuredWorkload size={25} className='btn' />
             <p>&nbsp;&nbsp; Transactions</p>

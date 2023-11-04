@@ -3,7 +3,7 @@ import InfoPage from '../components/infoPage/InfoPage';
 const Withdrawal = () => {
   return (
     <div className='--flex-center'>
-      <InfoPage />
+      <InfoPage title='withdrawal' />
     </div>
   );
 };
