@@ -25,6 +25,9 @@ const InfoPage = ({ title = '' }) => {
     if (!amount || !paymentMethod) {
       return toast.error('Please fill in all the required fields.');
     }
+    if (amount.match(/[^0-9]/g)) {
+      return toast.error('Please entre valid amount');
+    }
 
     if (settings.isDeposit) {
       return toast.info('Deposits cancelled, Try later.');
@@ -45,6 +48,10 @@ const InfoPage = ({ title = '' }) => {
 
     if (!amount || !paymentMethod) {
       return toast.error('Please fill in all the required fields.');
+    }
+
+    if (amount.match(/[^0-9]/g)) {
+      return toast.error('Please entre valid amount');
     }
 
     if (settings.isWithdrawal) {
@@ -71,7 +78,7 @@ const InfoPage = ({ title = '' }) => {
 
       <div className='--dir-flex-column --width-50 --m2 --p2  '>
         <input
-          type='number'
+          type='text'
           id='paypal'
           value={amount}
           placeholder='Amount $'

@@ -6,32 +6,37 @@ const Amount = require('../models/amount');
 const requestDepositFunds = asyncHandler(async (req, res) => {
   const { type, amountTrans, paymentMethod } = req.body;
   const userId = req.user._id;
+  try {
+    if (!type || !amountTrans || !paymentMethod) {
+      res.status(400);
+      throw new Error('Please fill in all the required fields.');
+    }
 
-  if (!type || !amountTrans || !paymentMethod) {
-    res.status(400);
-    throw new Error('Please fill in all the required fields.');
-  }
+    if (amountTrans.match(/[^0-9]/g)) {
+      throw new Error('Please entre valid amount');
+    }
 
-  const transaction = await Transaction.create({
-    userId,
-    type,
-    amountTrans,
-    paymentMethod,
-  });
-  if (transaction) {
-    const { _id, userId, type, amountTrans, paymentMethod, status, date } =
-      transaction;
-
-    res.status(201).json({
-      _id,
+    const transaction = await Transaction.create({
       userId,
       type,
       amountTrans,
       paymentMethod,
-      status,
-      date,
     });
-  } else {
+    if (transaction) {
+      const { _id, userId, type, amountTrans, paymentMethod, status, date } =
+        transaction;
+
+      res.status(201).json({
+        _id,
+        userId,
+        type,
+        amountTrans,
+        paymentMethod,
+        status,
+        date,
+      });
+    }
+  } catch (error) {
     res.status(400);
     throw new Error('Invalid transaction data');
   }
@@ -43,35 +48,41 @@ const requestWithdrawFunds = asyncHandler(async (req, res) => {
 
   const userId = user.id;
   const { type, amountTrans, paymentMethod } = req.body;
-  if (!type || !amountTrans || !paymentMethod) {
-    res.status(400);
-    throw new Error('Please fill in all the required fields.');
-  }
-  if (amountTrans > amountUser.amount) {
-    res.status(400);
-    throw new Error(`You don't have enough money to pull it.`);
-  }
+  try {
+    if (!type || !amountTrans || !paymentMethod) {
+      res.status(400);
+      throw new Error('Please fill in all the required fields.');
+    }
 
-  const transaction = await Transaction.create({
-    userId,
-    type,
-    amountTrans,
-    paymentMethod,
-  });
-  if (transaction) {
-    const { _id, userId, type, amountTrans, paymentMethod, status, date } =
-      transaction;
+    if (amountTrans.match(/[^0-9]/g)) {
+      throw new Error('Please entre valid amount');
+    }
+    if (amountTrans > amountUser.amount) {
+      res.status(400);
+      throw new Error(`You don't have enough money to pull it.`);
+    }
 
-    res.status(201).json({
-      _id,
+    const transaction = await Transaction.create({
       userId,
       type,
       amountTrans,
       paymentMethod,
-      status,
-      date,
     });
-  } else {
+    if (transaction) {
+      const { _id, userId, type, amountTrans, paymentMethod, status, date } =
+        transaction;
+
+      res.status(201).json({
+        _id,
+        userId,
+        type,
+        amountTrans,
+        paymentMethod,
+        status,
+        date,
+      });
+    }
+  } catch (error) {
     res.status(400);
     throw new Error('Invalid transaction data');
   }
