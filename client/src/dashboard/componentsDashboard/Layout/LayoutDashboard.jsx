@@ -7,6 +7,7 @@ import Loader, { LoaderImage } from '../../../components/loader/Loader';
 import Layout from '../../../components/layout/Layout';
 import { useEffect } from 'react';
 import { getAllTransactions } from '../../../redux/features/transaction/transactionSlice';
+import { getUsers } from '../../../redux/features/auth/authSlice';
 
 const LayoutDashboard = ({ children }) => {
   useRedirectLoggedOutUser('/login');
@@ -14,6 +15,7 @@ const LayoutDashboard = ({ children }) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllTransactions());
+    dispatch(getUsers());
   }, []);
   return (
     <>
