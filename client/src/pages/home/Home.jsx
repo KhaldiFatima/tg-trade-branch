@@ -12,7 +12,7 @@ import { NavLink } from 'react-router-dom';
 import InfoBox from '../../dashboard/componentsDashboard/infoBox/InfoBox';
 import { GiTakeMyMoney } from 'react-icons/gi';
 import { TbProgressBolt } from 'react-icons/tb';
-import noData from '../../assets/New folder/noData.png';
+import NoData from '../../components/noData/NoData';
 
 const icon1 = <GiTakeMyMoney size={40} color='#fff' />;
 const icon2 = <TbProgressBolt size={40} color='#fff' />;
@@ -52,7 +52,7 @@ const Home = () => {
           <div className='--dir-flex-column --width-50 --m2  '>
             <input
               type='text'
-              value={userAmount}
+              defaultValue={userAmount}
               // placeholder='Amount $'
               disabled
             />
@@ -75,10 +75,7 @@ const Home = () => {
           </div>
           <div className='table'>
             {!isLoading_T && transactionUser.length === 0 ? (
-              <div className='--center-all '>
-                <img src={noData} alt='No transaction found...' />
-                <p>No transaction found ... </p>
-              </div>
+              <NoData />
             ) : (
               <table>
                 <thead>

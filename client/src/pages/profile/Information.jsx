@@ -67,10 +67,11 @@ const Information = () => {
 
         // Save image to Cloudinary
         const response = await fetch(
-          'https://api.cloudinary.com/v1_1/duftswx4f/image/upload',
+          'https://api.cloudinary.com/v1_1/khaldifatima/image/upload',
           { method: 'post', body: image }
         );
         const imgData = await response.json();
+        console.log(imgData);
         imageURL = imgData.url.toString();
       }
       const userData = {
@@ -110,7 +111,6 @@ const Information = () => {
     <>
       <div className='profile-photo'>
         <img
-          // src={imagePreview === null ? user?.photo : imagePreview}
           src={imagePreview === null ? avatar : imagePreview}
           alt='Profile image'
         />
@@ -137,8 +137,9 @@ const Information = () => {
               onChange={handleImageChange}
             />
             <p>
-              <label>First Name:</label>
+              <label htmlFor='firstName'>First Name:</label>
               <input
+                id='firstName'
                 type='text'
                 name='firstName'
                 value={firstName}
@@ -146,8 +147,9 @@ const Information = () => {
               />
             </p>
             <p>
-              <label>Middle Name:</label>
+              <label htmlFor='middleName'>Middle Name:</label>
               <input
+                id='middleName'
                 type='text'
                 name='middleName'
                 value={middleName}
@@ -155,8 +157,9 @@ const Information = () => {
               />
             </p>
             <p>
-              <label>Last Name:</label>
+              <label htmlFor='lastName'>Last Name:</label>
               <input
+                id='lastName'
                 type='text'
                 name='lastName'
                 value={lastName}
@@ -165,8 +168,9 @@ const Information = () => {
             </p>
 
             <p>
-              <label>Email:</label>
+              <label htmlFor='email'>Email:</label>
               <input
+                id='email'
                 type='email'
                 name='email'
                 value={email}
@@ -174,13 +178,13 @@ const Information = () => {
                 disabled
               />
             </p>
-            <p>
+            <>
               <label>Phone:</label>
               <PhoneNumberInput
                 setPhoneNumber={setPhoneNumber}
                 phoneNumber={phoneNumber}
               />
-            </p>
+            </>
           </div>
         </div>
         <button className='--btn --btn-line '>Update Profile</button>

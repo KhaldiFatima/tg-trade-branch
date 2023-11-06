@@ -20,6 +20,7 @@ import {
 } from '../../redux/features/auth/filterSlice';
 import ReactPaginate from 'react-paginate';
 import { deleteTransactionsUser } from '../../redux/features/transaction/transactionSlice';
+import NoData from '../../components/noData/NoData';
 
 const UsersList = () => {
   const dispatch = useDispatch();
@@ -95,7 +96,7 @@ const UsersList = () => {
           </div>
           <br />
           {!isLoading && users.length === 0 ? (
-            <p>No user found ... </p>
+            <NoData />
           ) : (
             <table>
               <thead>

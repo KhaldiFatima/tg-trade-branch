@@ -2,7 +2,7 @@ import { FaUserCircle } from 'react-icons/fa';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
 import Logo from '../logo/Logo';
 import './Header.scss';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RESET, logout } from '../../redux/features/auth/authSlice';
 import { AdminLink, ShowOnLogin, ShowOnLogout } from '../helpper/hiddenLinks';
 import UserName from '../userName/UserName';
@@ -18,6 +18,7 @@ const Header = () => {
   // const init = Cookies.get('isShowHome');
   // console.log(init);
   const [isShowHome, setIsShowHome] = useState(false);
+  const { user } = useSelector((state) => state.auth);
 
   const logoutUser = async () => {
     dispatch(RESET());
@@ -40,9 +41,10 @@ const Header = () => {
           <ShowOnLogin>
             <li className='--flex-center name'>
               <UserName />
-              &nbsp;
-              <FaUserCircle size={20} />
+              &nbsp;{' '}
             </li>
+            {/* <FaUserCircle size={20} /> */}
+
             {isShowHome === true ? (
               <li
                 onClick={() => {
@@ -60,7 +62,16 @@ const Header = () => {
                 </NavLink>
               </li>
             )}
-
+            <li>
+              <div
+                className='avatar'
+                onClick={() => {
+                  navigate('/profile');
+                }}
+              >
+                <img src={user?.avatar} alt='Profile image' />
+              </div>
+            </li>
             <AdminLink>
               <li
                 onClick={() => {

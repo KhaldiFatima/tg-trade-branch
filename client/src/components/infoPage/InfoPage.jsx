@@ -78,8 +78,8 @@ const InfoPage = ({ title = '' }) => {
 
       <div className='--dir-flex-column --width-50 --m2 --p2  '>
         <input
+          name='amount'
           type='text'
-          id='paypal'
           value={amount}
           placeholder='Amount $'
           onChange={(e) => setAmount(e.target.value)}

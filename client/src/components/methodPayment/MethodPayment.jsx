@@ -6,7 +6,7 @@ import './Method.scss';
 const MethodPayment = ({ paymentMethod, setPaymentMethod }) => {
   const isMethodPaypal = paymentMethod === 'paypal';
   const isMethodPayeer = paymentMethod === 'payeer';
-  const isMethodPerfacetMoney = paymentMethod === 'perfectMoney';
+  const isMethodPerfectMoney = paymentMethod === 'perfectMoney';
 
   return (
     <div className='--my2'>
@@ -33,7 +33,6 @@ const MethodPayment = ({ paymentMethod, setPaymentMethod }) => {
             name='payment_method'
             type='radio'
             id='paypal'
-            // value='paypal'
             value={paymentMethod}
             onChange={() => setPaymentMethod('paypal')}
             checked={isMethodPaypal}
@@ -49,7 +48,7 @@ const MethodPayment = ({ paymentMethod, setPaymentMethod }) => {
             id='perfectMoney'
             value={paymentMethod}
             onChange={() => setPaymentMethod('perfectMoney')}
-            checked={isMethodPerfacetMoney}
+            checked={isMethodPerfectMoney}
           />
         </div>
       </div>

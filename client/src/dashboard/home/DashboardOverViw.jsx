@@ -2,6 +2,7 @@ import TransactionUsers from '../transacUsers/TransactionUsers';
 import OverView from '../componentsDashboard/dashboardState/OverView';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
+import NoData from '../../components/noData/NoData';
 
 const Dashboard = () => {
   const { isLoading_T, transactions } = useSelector(
@@ -15,7 +16,7 @@ const Dashboard = () => {
         <h4>Latest transactions</h4>
         <div className='table'>
           {!isLoading_T && transactions.length === 0 ? (
-            <p>No transaction found ... </p>
+            <NoData />
           ) : (
             <table>
               <thead>

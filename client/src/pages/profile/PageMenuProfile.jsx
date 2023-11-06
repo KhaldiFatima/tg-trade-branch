@@ -11,6 +11,8 @@ import { deleteUser, logout } from '../../redux/features/auth/authSlice';
 import { confirmAlert } from 'react-confirm-alert';
 import useRedirectLoggedOutUser from '../../customHook/useRedirectLoggedOutUser';
 import { deleteTransactionsUser } from '../../redux/features/transaction/transactionSlice';
+import { FaTachometerAlt } from 'react-icons/fa';
+import { AdminLink } from '../../components/helpper/hiddenLinks';
 
 const PageMenuProfile = () => {
   const { user } = useSelector((state) => state.auth);
@@ -44,17 +46,20 @@ const PageMenuProfile = () => {
     <div className='list-profile --flex-center'>
       <ul className='list-pro'>
         <li id='profile'>
-          <NavLink className='--flex-start' to='/profile'>
+          <NavLink className='--flex-start' to='/profile/'>
             <AiOutlineUser size={20} className='btn' />
             <p>&nbsp;&nbsp; Profile</p>
           </NavLink>
         </li>
-        <li id='address'>
-          <NavLink className='--flex-start' to='/profile/address'>
-            <MdOutlinePlace size={20} className='btn' />
-            <p>&nbsp;&nbsp; Address</p>
-          </NavLink>
-        </li>
+        <AdminLink>
+          <li id='dashboard'>
+            <NavLink className='--flex-start' to='/dashboard/'>
+              <FaTachometerAlt size={25} className='btn' />
+              <p>&nbsp;&nbsp; Dashboard</p>
+            </NavLink>
+          </li>
+        </AdminLink>
+
         <li id='change password'>
           <NavLink className='--flex-start' to='/profile/change-password'>
             <RiLockPasswordLine size={20} className='btn' />

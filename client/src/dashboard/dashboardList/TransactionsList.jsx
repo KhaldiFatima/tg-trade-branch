@@ -17,6 +17,7 @@ import {
 import { NavLink } from 'react-router-dom';
 import { updateAmount } from '../../redux/features/amount/amountSlice';
 import noData from '../../assets/New folder/noData.png';
+import NoData from '../../components/noData/NoData';
 
 const TransactionList = () => {
   const [search, setSearch] = useState('');
@@ -93,10 +94,7 @@ const TransactionList = () => {
         </div>
         <div className='table'>
           {!isLoading_T && transactionsPending.length === 0 ? (
-            <div className='--center-all '>
-              <img src={noData} alt='No transaction found...' />
-              <p>No transaction found ... </p>
-            </div>
+            <NoData />
           ) : (
             <table>
               <thead>

@@ -94,32 +94,59 @@ const Profile = () => {
             <div className='--flex-between '>
               <div className='--mr2'>
                 <p>
-                  <label>First Name:</label>
-                  <input type='text' name='firstName' value={firstName} />
+                  <label htmlFor='firstName'>First Name:</label>
+                  <input
+                    id='firstName'
+                    type='text'
+                    name='firstName'
+                    value={firstName}
+                  />
                 </p>
                 <p>
-                  <label>Middle Name:</label>
-                  <input type='text' name='middleName' value={middleName} />
+                  <label htmlFor='middleName'>Middle Name:</label>
+                  <input
+                    id='middleName'
+                    type='text'
+                    name='middleName'
+                    value={middleName}
+                  />
                 </p>
                 <p>
-                  <label>Last Name:</label>
-                  <input type='text' name='lastName' value={lastName} />
+                  <label htmlFor='lastName'>Last Name:</label>
+                  <input
+                    id='lastName'
+                    type='text'
+                    name='lastName'
+                    value={lastName}
+                  />
                 </p>
                 <p></p>
               </div>
               <div className='--mb1 --ml2'>
                 <p>
-                  <label>Role:</label>
-                  <input type='text' name='role' value={role} disabled />
+                  <label htmlFor='role'>Role:</label>
+                  <input
+                    id='role'
+                    type='text'
+                    name='role'
+                    value={role}
+                    disabled
+                  />
                 </p>
                 <p>
-                  <label>Email:</label>
-                  <input type='email' name='email' value={email} disabled />
+                  <label htmlFor='email'>Email:</label>
+                  <input
+                    id='email'
+                    type='email'
+                    name='email'
+                    value={email}
+                    disabled
+                  />
                 </p>
-                <p>
+                <>
                   <label>Phone:</label>
                   <PhoneNumberInput phoneNumber={phoneNumber} />
-                </p>
+                </>
               </div>
             </div>
             <div className='--flex-between --my'>
