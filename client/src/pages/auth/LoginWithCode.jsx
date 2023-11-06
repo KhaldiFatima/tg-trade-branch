@@ -43,7 +43,7 @@ const LoginWithCode = () => {
     const code = {
       loginCode,
     };
-    console.log(email, code);
+
     await dispatch(loginWithCode({ code, email }));
   };
 

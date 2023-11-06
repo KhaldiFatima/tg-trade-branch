@@ -335,7 +335,6 @@ const transactionSlice = createSlice({
         state.isSuccess_T = true;
         state.transaction = action.payload;
         toast.success('Deposit of funds successfully requested');
-        console.log(action.payload);
       })
       .addCase(requestDepositFunds.rejected, (state, action) => {
         state.isLoading_T = false;
@@ -354,7 +353,6 @@ const transactionSlice = createSlice({
         state.isSuccess_T = true;
         state.transaction = action.payload;
         toast.success('Withdrawal of funds successfully requested');
-        console.log(action.payload);
       })
       .addCase(requestWithdrawFunds.rejected, (state, action) => {
         state.isLoading_T = false;

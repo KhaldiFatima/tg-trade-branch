@@ -38,7 +38,7 @@ const InfoPage = ({ title = '' }) => {
       amountTrans: amount,
       paymentMethod,
     };
-    console.log(amount);
+
     await dispatch(requestDepositFunds(transactionData));
     await dispatch(RESET_T());
   };
@@ -62,7 +62,7 @@ const InfoPage = ({ title = '' }) => {
       amountTrans: amount,
       paymentMethod,
     };
-    console.log(transactionData);
+
     await dispatch(requestWithdrawFunds(transactionData));
     await dispatch(RESET_T());
   };

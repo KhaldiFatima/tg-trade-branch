@@ -34,7 +34,6 @@ const EditTransaction = () => {
 
   const isDeposit = type === 'deposit';
   const isWithdrawal = type === 'withdrawal';
-  console.log(transaction);
 
   useLayoutEffect(() => {
     if (transaction) {
@@ -56,7 +55,7 @@ const EditTransaction = () => {
         amountTrans: amount,
         paymentMethod,
       };
-      console.log(transactionData);
+
       await dispatch(updateTransaction({ id, transactionData }));
       if (isSuccess_T && transaction) {
         await dispatch(getUSerTransactions());

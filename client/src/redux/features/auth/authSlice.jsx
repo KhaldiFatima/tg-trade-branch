@@ -350,7 +350,6 @@ const authSlice = createSlice({
         state.user = action.payload;
         state.sendCode = true;
         toast.success('Registration successful');
-        console.log(action.payload);
       })
       .addCase(register.rejected, (state, action) => {
         state.isLoading = false;
@@ -369,7 +368,6 @@ const authSlice = createSlice({
         state.isLoggedIn = true;
         state.user = action.payload;
         toast.success('Login Successful');
-        console.log(action.payload);
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
@@ -406,7 +404,6 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.isLoggedIn = action.payload;
-        console.log(action.payload);
       })
       .addCase(getLoginStatus.rejected, (state, action) => {
         state.isLoading = false;
@@ -440,7 +437,6 @@ const authSlice = createSlice({
         state.isLoggedIn = true;
         state.user = action.payload;
         toast.success('User Updated');
-        console.log(action.payload);
       })
       .addCase(updateUser.rejected, (state, action) => {
         state.isLoading = false;
@@ -585,7 +581,6 @@ const authSlice = createSlice({
       .addCase(getUserWithId.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        console.log(action);
         state.thisUser = action.payload;
       })
       .addCase(getUserWithId.rejected, (state, action) => {

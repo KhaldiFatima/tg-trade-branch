@@ -82,7 +82,6 @@ const settingsSlice = createSlice({
         state.isSuccess_S = true;
         state.settings = action.payload;
         toast.success('Settings Updated');
-        console.log('------' + action.meta);
       })
       .addCase(updateSettings.rejected, (state, action) => {
         state.isLoading_S = false;

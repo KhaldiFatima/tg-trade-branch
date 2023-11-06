@@ -71,7 +71,6 @@ const Register = () => {
     }
 
     if (!phoneNumber.match(/^\+?[1-9]\d{8,14}$/)) {
-      console.log(phoneNumber);
       return toast.error('Please enter a valid phone number.');
     }
 
@@ -83,7 +82,7 @@ const Register = () => {
       email,
       password,
     };
-    console.log(userData);
+
     await dispatch(register(userData));
   };
 

@@ -65,7 +65,6 @@ const amountSlice = createSlice({
         state.isLoadingA = false;
         state.isSuccess = true;
         state.amount = action.payload;
-        console.log(action.payload);
       })
       .addCase(getAmount.rejected, (state, action) => {
         state.isLoadingA = false;

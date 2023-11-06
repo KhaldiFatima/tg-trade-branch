@@ -52,7 +52,6 @@ const Information = () => {
         return toast.error('Please fill in all the required fields.');
       }
       if (!phoneNumber.match(/^\+?[1-9]\d{8,14}$/)) {
-        console.log(phoneNumber);
         return toast.error('Please enter a valid phone number.');
       }
       if (
@@ -71,9 +70,7 @@ const Information = () => {
           'https://api.cloudinary.com/v1_1/duftswx4f/image/upload',
           { method: 'post', body: image }
         );
-        console.log(response);
         const imgData = await response.json();
-        console.log(imgData);
         imageURL = imgData.url.toString();
       }
       const userData = {
@@ -90,7 +87,6 @@ const Information = () => {
       await dispatch(updateUser(userData));
     } catch (error) {
       toast.error(error.message);
-      console.log(error);
     }
   };
 

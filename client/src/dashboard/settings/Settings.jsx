@@ -46,7 +46,7 @@ const Settings = () => {
     };
     await dispatch(updateSettings(settingsData));
   };
-  console.log(settsData);
+
   useLayoutEffect(() => {
     if (settings) {
       setSettsData({

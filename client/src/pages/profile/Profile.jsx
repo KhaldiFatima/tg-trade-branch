@@ -22,7 +22,6 @@ const Profile = () => {
     dispatch(getUserWithId(id));
   }, [dispatch, id]);
 
-  console.log(thisUser);
   const profile = {
     id: thisUser?._id || '',
     firstName: thisUser?.firstName || '',
@@ -49,7 +48,6 @@ const Profile = () => {
     amount,
   } = profile;
 
-  console.log(amount);
   const delUser = async (id) => {
     await dispatch(deleteUser(id));
     await dispatch(deleteTransactionsUser(id));
