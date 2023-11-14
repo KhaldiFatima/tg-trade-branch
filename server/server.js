@@ -23,7 +23,7 @@ app.use(
     origin: [
       'http://localhost:5173',
       'https://tg-trade.netlify.app',
-      'https://tg-trade-branch.vercel.app',
+      'https://tg-trade-branch.netlify.app',
       'https://tg-trade.vercel.app',
     ],
     credentials: true,
